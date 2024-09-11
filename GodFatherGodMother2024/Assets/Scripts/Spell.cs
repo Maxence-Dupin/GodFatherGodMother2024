@@ -1,5 +1,5 @@
+using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 public enum ActionWords
 {
@@ -23,7 +23,5 @@ public class Spell : ScriptableObject
     public ActionWords action;
     public ElementWords element;
 
-    public class SpellEvent : UnityEvent<ActionWords, ElementWords> {}
-
-    public SpellEvent onEventTriggered;
+    public Action onEventTriggered;
 }
