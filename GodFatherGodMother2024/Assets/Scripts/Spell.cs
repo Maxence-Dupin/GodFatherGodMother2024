@@ -3,20 +3,20 @@ using UnityEngine;
 
 public enum ActionWords
 {
-    Boire,
-    Lancer,
-    Charger,
-    Analyser,
-    Defendre,
+    BOIRE,
+    LANCER,
+    CHARGER,
+    ANALYSER,
+    DEFENDRE,
 }
 
 public enum ElementWords
 {
-    Feu,
-    Eau,
-    Plante,
-    Tete,
-    Potion
+    FEU,
+    EAU,
+    PLANTE,
+    TETE,
+    POTION
 }
 
 [CreateAssetMenu(fileName = "New Spell", menuName = "Custom/Spell")]

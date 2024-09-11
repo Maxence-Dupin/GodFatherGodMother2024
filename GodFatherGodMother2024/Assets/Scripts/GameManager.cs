@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
 
     private bool _gameOver;
 
-    private ActionWords _currentActionWord;
-    private ElementWords _currentElementWords;
+    private static GameManager _instance;
 
     #endregion
 
@@ -29,9 +28,38 @@ public class GameManager : MonoBehaviour
 
     public List<Spell> SpellsList => _spellsList;
 
+    public static GameManager Instance => _instance;
+
+    #endregion
+
+    #region Public Methods
+
+    public void CallSpellEvent(string actionWord, string elementWord)
+    {
+        for (var i = 0; i < _spellsList.Count; i++)
+        {
+            var spell = _spellsList[i];
+            
+            if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
+            {
+                spell.onEventTriggered.Invoke();
+            }
+        }
+    }
+
     #endregion
 
     #region Unity Event Functions
+
+    private void Awake()
+    {
+        if (_instance != null)
+        {
+            Destroy(_instance);
+        }
+
+        _instance = this;
+    }
 
     private void Start()
     {
@@ -49,7 +77,7 @@ public class GameManager : MonoBehaviour
         if (_gameTimer <= 0 && !_gameOver)
         {
             _gameOver = true;
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
         }
     }
 
@@ -65,33 +93,20 @@ public class GameManager : MonoBehaviour
         {
             if (_playerTurn)
             {
-               Debug.Log("Tour joueur");
+               //Debug.Log("Tour joueur");
 
                StartCoroutine(WaitEndOfTurn());
             }
             else
             { 
-                Debug.Log("Tour ennemi");
+                //Debug.Log("Tour ennemi");
                 
                 StartCoroutine(WaitEndOfTurn());
             }
         }
         else
         {
-            Debug.Log("Victoire");
-        }
-    }
-
-    private void CallSpellEvent()
-    {
-        for (var i = 0; i < _spellsList.Count; i++)
-        {
-            var spell = _spellsList[i];
-            
-            if (_currentActionWord == spell.Action && _currentElementWords == spell.Element)
-            {
-                spell.onEventTriggered.Invoke();
-            }
+            //Debug.Log("Victoire");
         }
     }
 
