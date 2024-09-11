@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     #region Public Methods
 
-    public void CallSpellEvent(string actionWord, string elementWord)
+    public string CallSpellEvent(string actionWord, string elementWord)
     {
         for (var i = 0; i < _spellsList.Count; i++)
         {
@@ -43,8 +43,11 @@ public class GameManager : MonoBehaviour
             if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
             {
                 spell.onEventTriggered.Invoke();
+                return spell.Message;
             }
         }
+
+        return null;
     }
 
     #endregion

@@ -9,7 +9,10 @@ public class CommandConsole : MonoBehaviour
     [SerializeField] private TMP_InputField _inputFieldPrefab;
     [SerializeField] private TextMeshProUGUI _textPrefab;
 
+    [Space(10)] private Transform _viewport;
+
     private TMP_InputField _currentInputField;
+    private TextMeshProUGUI _currentText;
 
     #endregion
 
@@ -21,21 +24,21 @@ public class CommandConsole : MonoBehaviour
         
         for (var i = 0 ; i < words.Count ; i++)
         {
-            if (words[i] == "" || words[i] == " ")
-            {
-                words.Remove(words[i]);
-                i--;
-            }
-            else
-            {
-                words[i] = words[i].ToUpper();
-                Debug.Log(words[i]);
-            }
+            if (words[i] != "" && words[i] != " ") continue;
+            
+            words.Remove(words[i]);
+            i--;
         }
 
         if (words.Count == 2)
         {
-            GameManager.Instance.CallSpellEvent(words[0], words[1]);
+            var consoleMessage = GameManager.Instance.CallSpellEvent(words[0], words[1]);
+
+            _currentText.text = consoleMessage ?? "Commande inconnue.";
+        }
+        else
+        {
+            _currentText.text = "Commande inconnue.";
         }
     }
 
@@ -46,6 +49,7 @@ public class CommandConsole : MonoBehaviour
     private void Start()
     {
         _currentInputField = _inputFieldPrefab;
+        _currentText = _textPrefab;
     }
 
     #endregion
