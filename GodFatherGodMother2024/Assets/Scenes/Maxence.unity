@@ -322,8 +322,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spellsList:
-  - {fileID: 11400000, guid: 5b8c00c99ca79ce4eb92a94649b1bc0e, type: 2}
+  - {fileID: 11400000, guid: 3110d64b5ff18534fbe7109374172629, type: 2}
+  - {fileID: 11400000, guid: 457ce579e43477b4090167ed9158dee9, type: 2}
+  - {fileID: 11400000, guid: a4a562650fe08be4489eedb7ac24c633, type: 2}
+  - {fileID: 11400000, guid: 19efdae6956ce6c4dae5d45aeac75914, type: 2}
+  - {fileID: 11400000, guid: 254c5a3fd4cd0134cb28d3b67128ecc7, type: 2}
+  - {fileID: 11400000, guid: b0d3c675a1561a74bb388a2e54dbcd57, type: 2}
   - {fileID: 11400000, guid: bc72b568d6b58cb47a1810b7172c9232, type: 2}
+  - {fileID: 11400000, guid: 9a02965faee25bf448704de1abdd8dc5, type: 2}
+  - {fileID: 11400000, guid: e50801c7cd02db94bae971107c8f4b10, type: 2}
+  - {fileID: 11400000, guid: ef2a7722a44718245b87e743849bc426, type: 2}
+  - {fileID: 11400000, guid: d62b5a8ba32a080438a4eb9274336bff, type: 2}
+  - {fileID: 11400000, guid: b91a5673503715440881d066da010a28, type: 2}
+  - {fileID: 11400000, guid: 597901568f46be64ca786f04adcc1149, type: 2}
+  - {fileID: 11400000, guid: 19264bcd75a732a4eb56d674b3d05327, type: 2}
+  - {fileID: 11400000, guid: 404c1dd2af74c5c46bc9123d0ff532d8, type: 2}
+  - {fileID: 11400000, guid: 6c260dcdad8eb9a46afa3a5e611a0e43, type: 2}
+  - {fileID: 11400000, guid: a09a1626aab2db047b1a392877446a0d, type: 2}
+  - {fileID: 11400000, guid: befdf37f0c5b5274780848beebdeab55, type: 2}
+  - {fileID: 11400000, guid: 189992dbd8fc1424aa4bb4aec7717c30, type: 2}
+  - {fileID: 11400000, guid: a259bb4e98b58704b8f9e8ff26c363b7, type: 2}
+  - {fileID: 11400000, guid: 97aca437bbaf7f94797fab45a7e2cf24, type: 2}
+  - {fileID: 11400000, guid: 5b8c00c99ca79ce4eb92a94649b1bc0e, type: 2}
+  - {fileID: 11400000, guid: f5f425dc8bf5dee41afcf7c011820796, type: 2}
+  - {fileID: 11400000, guid: e5f0559391d4cff4ab57b19f99fbe19f, type: 2}
+  - {fileID: 11400000, guid: 7efffa63bd30dbf44b0dd60e11b3edf7, type: 2}
   _playerTurn: 1
   _gameTimer: 10
   _player: {fileID: 1372020515}
