@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 309146930}
   - component: {fileID: 309146931}
   m_Layer: 0
-  m_Name: PlantHead
+  m_Name: SecondHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -246,7 +246,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -399,14 +399,11 @@ MonoBehaviour:
   _health: 100
   _dragonHeads:
   - _element: 0
-    _spriteGameObject: {fileID: 1462432648}
-    _associatedKeyNumber: 0
-  - _element: 1
-    _spriteGameObject: {fileID: 309146929}
-    _associatedKeyNumber: 1
-  - _element: 2
-    _spriteGameObject: {fileID: 1395249187}
-    _associatedKeyNumber: 2
+    _spriteGameObject: {fileID: 0}
+  - _element: 0
+    _spriteGameObject: {fileID: 0}
+  - _element: 0
+    _spriteGameObject: {fileID: 0}
 --- !u!1 &1372020512
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,7 +459,7 @@ GameObject:
   - component: {fileID: 1395249188}
   - component: {fileID: 1395249189}
   m_Layer: 0
-  m_Name: WaterHead
+  m_Name: ThirdHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -525,7 +522,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0, g: 0, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -546,7 +543,7 @@ GameObject:
   - component: {fileID: 1462432649}
   - component: {fileID: 1462432650}
   m_Layer: 0
-  m_Name: FireHead
+  m_Name: FirstHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -609,7 +606,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
