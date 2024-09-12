@@ -26,6 +26,8 @@ public class Dragon : Entity
         [SerializeField] private GameManager.SPELLSTATE _element;
         [SerializeField] private GameObject _spriteGameObject;
         [SerializeField] private int _associatedKeyNumber;
+
+        public GameManager.SPELLSTATE Element => _element;
     }
 
     #endregion

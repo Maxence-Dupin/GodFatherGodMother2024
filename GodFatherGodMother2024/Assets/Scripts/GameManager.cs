@@ -23,10 +23,13 @@ public class GameManager : MonoBehaviour
 
     private int _baseDragonHealth;
     private USBDeviceName _selectedDragonHead;
+    private Dragon.DragonHead _headClassSelected;
 
     private float _currentTurnDuration;
     //Current turn action, hydra or player !
     private ENTITIES_ACTIONS _currentTurnAction;
+    private SPELLSTATE _currentPlayerSpellState;
+    private SPELLSTATE _currentHydraSpellState;
 
     private bool _gameOver;
 
@@ -57,6 +60,7 @@ public class GameManager : MonoBehaviour
             if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
             {
                 spell.onEventTriggered?.Invoke();
+                NextTurn();
                 return spell.Message;
             }
         }
@@ -142,6 +146,7 @@ public class GameManager : MonoBehaviour
         _spellsList[2].onEventTriggered += AnalyserPlante;
         _spellsList[4].onEventTriggered += AnalyserTete;
         _spellsList[8].onEventTriggered += BoirePotion;
+        _spellsList[10].onEventTriggered += ChargerEau;
         _spellsList[11].onEventTriggered += ChargerFeu;
         _spellsList[12].onEventTriggered += ChargerPlante;
         _spellsList[15].onEventTriggered += DefendreEau;
@@ -210,6 +215,22 @@ public class GameManager : MonoBehaviour
             if (_playerTurn)
             {
                //Debug.Log("Tour joueur");
+               switch (_currentTurnAction)
+                {
+                    case ENTITIES_ACTIONS.LANCER:
+                        SPELLREACTION outcome = CalculateReaction(_currentPlayerSpellState, _currentHydraSpellState);
+                        Debug.Log(outcome);
+                        break;
+                    case ENTITIES_ACTIONS.DEFENDRE:
+                        break;
+                    case ENTITIES_ACTIONS.BOIRE:
+                        break;
+                    case ENTITIES_ACTIONS.ANALYSER:
+                        break;
+                    case ENTITIES_ACTIONS.CHARGER:
+                        break;
+                }
+
 
                //Animation
                StartCoroutine(WaitEndOfTurn());
@@ -232,18 +253,22 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Throw fire");
         _currentTurnAction = ENTITIES_ACTIONS.LANCER;
+        _currentPlayerSpellState = SPELLSTATE.FEU;
+
     }
     
     private void LancerEau()
     {
         Debug.Log("Throw water");
         _currentTurnAction = ENTITIES_ACTIONS.LANCER;
+        _currentPlayerSpellState = SPELLSTATE.EAU;
     }
     
     private void LancerPlante()
     {
         Debug.Log("Throw plant");
         _currentTurnAction = ENTITIES_ACTIONS.LANCER;
+        _currentPlayerSpellState = SPELLSTATE.PLANTE;
     }
     
     private void BoirePotion()
@@ -257,7 +282,12 @@ public class GameManager : MonoBehaviour
         Debug.Log("Charge Fire");
         _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
     }
-    
+    private void ChargerEau()
+    {
+        Debug.Log("Charge Water");
+        _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
+    }
+
     private void ChargerPlante()
     {
         Debug.Log("Charge Plant");
@@ -324,6 +354,29 @@ public class GameManager : MonoBehaviour
     private void HeadChange(USBDeviceName headSelected)
     {
         _selectedDragonHead = headSelected;
+
+        switch (_selectedDragonHead)
+        {
+            case USBDeviceName.MiddleHead:
+                _headClassSelected = _enemy.DragonHeads[1];
+                break;
+            case USBDeviceName.RightHead:
+                _headClassSelected = _enemy.DragonHeads[2];
+                break;
+            case USBDeviceName.LeftHead:
+                _headClassSelected = _enemy.DragonHeads[0];
+                break;
+            case USBDeviceName.Multiple:
+                Debug.Log("Error");
+                break;
+            case USBDeviceName.None:
+                Debug.Log("Error");
+                break;
+            default:
+                break;
+        }
+
+        _currentHydraSpellState = _headClassSelected.Element;
     }
 
     private IEnumerator WaitEndOfTurn()
