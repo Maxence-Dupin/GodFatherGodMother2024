@@ -40,10 +40,12 @@ public class CommandConsole : MonoBehaviour
             {
                 GrimoireManager.Instance.CheckGrimoireLetters(words[0], words[1]);
             }
+            GameManager.Instance.onBadCommand.Invoke();
         }
         else
         {
             _currentText.text = "Commande inconnue.";
+            GameManager.Instance.onBadCommand.Invoke();
         }
     }
 

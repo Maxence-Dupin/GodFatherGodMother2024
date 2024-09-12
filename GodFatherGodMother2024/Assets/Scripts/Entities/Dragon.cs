@@ -1,13 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Element
-{
-    Fire,
-    Plant,
-    Water
-}
-
 public class Dragon : Entity
 {
     #region Fields
@@ -21,6 +14,8 @@ public class Dragon : Entity
 
     public int Health => _health;
 
+    public List<DragonHead> DragonHeads => _dragonHeads;
+
     #endregion
 
     #region Class
@@ -28,7 +23,7 @@ public class Dragon : Entity
     [System.Serializable]
     public class DragonHead
     {
-        [SerializeField] private Element _element;
+        [SerializeField] private GameManager.SPELLSTATE _element;
         [SerializeField] private GameObject _spriteGameObject;
         [SerializeField] private int _associatedKeyNumber;
     }
