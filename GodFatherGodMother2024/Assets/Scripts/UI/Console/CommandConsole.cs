@@ -71,7 +71,9 @@ public class CommandConsole : MonoBehaviour
 
     private void Update()
     {
-        if (EventSystem.current.currentSelectedGameObject != _currentInputField.gameObject)
+        if (GrimoireManager.Instance.PauseMenuOpened) return;
+
+            if (EventSystem.current.currentSelectedGameObject != _currentInputField.gameObject)
         {
             _currentInputField.Select();
             _currentInputField.ActivateInputField();

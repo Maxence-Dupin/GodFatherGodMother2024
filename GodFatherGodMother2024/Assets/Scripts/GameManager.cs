@@ -165,7 +165,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (_gameOver) return;
+        if (_gameOver || GrimoireManager.Instance.PauseMenuOpened) return;
         
         _gameTimer -= Time.deltaTime;
         var timerValue = (int)_gameTimer + 1;
