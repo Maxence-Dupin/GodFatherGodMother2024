@@ -8,18 +8,17 @@ public class Program : MonoBehaviour
 {
     const int DIVIDING_NUMBER = 1000000000; //Diminishing const
 
-    private IEnumerator coroutine; //Coroutine
+    private Coroutine coroutine; //Coroutine
 
     public USBDeviceName headCheck = USBDeviceName.None; //HeadState
 
     // Start is called before the first frame update
     void Start()
     {
-        coroutine = ClockForUSBCheck();
-        StartCoroutine(coroutine);
+        coroutine = StartCoroutine(ClockForUSBCheck());
 
         DriveInfo[] allDrives = DriveInfo.GetDrives();
-        List <USBDeviceInfo> testList = GetUSBDevices();
+        List<USBDeviceInfo> testList = GetUSBDevices();
 
         /*
         foreach (USBDeviceInfo d in testList)
@@ -36,13 +35,13 @@ public class Program : MonoBehaviour
 
     static List<USBDeviceInfo> GetUSBDevices()
     {
-        List<USBDeviceInfo> devices = new List<USBDeviceInfo> ();
+        List<USBDeviceInfo> devices = new List<USBDeviceInfo>();
         DriveInfo[] allDrives = DriveInfo.GetDrives();
         foreach (var device in allDrives)
         {
-            if(device.IsReady == true)
+            if (device.IsReady == true)
             {
-                if(device.TotalSize / DIVIDING_NUMBER < 4 && device.TotalSize / DIVIDING_NUMBER > 0)
+                if (device.TotalSize / DIVIDING_NUMBER < 4 && device.TotalSize / DIVIDING_NUMBER > 0)
                 {
                     devices.Add(new USBDeviceInfo(device.Name, device.TotalSize / DIVIDING_NUMBER));
                 }
@@ -54,18 +53,19 @@ public class Program : MonoBehaviour
     USBDeviceName GetHead()
     {
         List<USBDeviceInfo> USBDeviceInfos = GetUSBDevices();
-        if(USBDeviceInfos.Count == 1) return USBDeviceInfos[0].USBDeviceName;
-        if (USBDeviceInfos.Count > 1) return USBDeviceName.Multiple;
-        return USBDeviceName.None;
+        return (USBDeviceInfos.Count == 1 ? USBDeviceInfos[0].USBDeviceName : (USBDeviceInfos.Count > 1 ? USBDeviceName.Multiple : USBDeviceName.None));
     }
 
     //Clock
     private IEnumerator ClockForUSBCheck()
     {
-        headCheck = GetHead();
-        Debug.Log("Chech");
-        yield return new WaitForSeconds(.1f);
-        StartCoroutine(ClockForUSBCheck());
+        var waiter = new WaitForSeconds(.1f);
+        while (true)
+        {
+            headCheck = GetHead();
+            Debug.Log("Check");
+            yield return waiter;
+        }
     }
 }
 
@@ -88,7 +88,7 @@ public enum USBDeviceName
 {
     LeftHead = 1,
     MiddleHead = 2,
-    RightHead = 3, 
+    RightHead = 3,
     Multiple = 4,
     None = 5
 }
