@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +14,7 @@ public class GrimoireManager : MonoBehaviour
 
     private bool _grimoireOpened;
 
-    private GrimoireLetter[] _grimoireLetters;
+    private GrimoireWord[] _grimoireWords;
 
     private static GrimoireManager _instance;
 
@@ -29,6 +31,9 @@ public class GrimoireManager : MonoBehaviour
     public void ToggleGrimoire()
     {
         _grimoireOpened = !_grimoireOpened;
+
+        _grimoireTransform.DOKill();
+        _darkPanel.DOKill();
         
         if (_grimoireOpened)
         {
@@ -51,34 +56,17 @@ public class GrimoireManager : MonoBehaviour
         }
     }
 
-    public void CheckGrimoireLetters(string firstWord, string secondWord)
+    public void CheckGrimoireLetters(List<string> words)
     {
-        for (var i = 0; i < firstWord.Length; i++)
+        for (var i = 0; i < _grimoireWords.Length; i++)
         {
-            for (var j = 0; j < _grimoireLetters.Length; j++)
+            for (var j = 0; j < words.Count; j++)
             {
-                var letter = _grimoireLetters[j];
-
-                if (letter.LetterText.enabled) continue;
-
-                if (letter.Letter == firstWord[i])
+                if (_grimoireWords[i].Word != words[j]) continue;
+                
+                for (var k = 0; k < _grimoireWords[i].LetterTexts.Length; k++)
                 {
-                    letter.LetterText.enabled = true;
-                }
-            }
-        }
-        
-        for (var i = 0; i < secondWord.Length; i++)
-        {
-            for (var j = 0; j < _grimoireLetters.Length; j++)
-            {
-                var letter = _grimoireLetters[j];
-
-                if (letter.LetterText.enabled) continue;
-
-                if (letter.Letter == secondWord[i])
-                {
-                    letter.LetterText.enabled = true;
+                    _grimoireWords[i].LetterTexts[k].enabled = true;
                 }
             }
         }
@@ -100,7 +88,15 @@ public class GrimoireManager : MonoBehaviour
 
     private void Start()
     {
-        _grimoireLetters = GetComponentsInChildren<GrimoireLetter>();
+        _grimoireWords = GetComponentsInChildren<GrimoireWord>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            ToggleGrimoire();
+        }
     }
 
     #endregion
