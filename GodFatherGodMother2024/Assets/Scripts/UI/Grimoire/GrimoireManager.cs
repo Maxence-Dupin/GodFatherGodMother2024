@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -18,6 +17,8 @@ public class GrimoireManager : MonoBehaviour
 
     private static GrimoireManager _instance;
 
+    private bool _grimoireAnimation;
+
     #endregion
 
     #region Properties
@@ -30,29 +31,31 @@ public class GrimoireManager : MonoBehaviour
 
     public void ToggleGrimoire()
     {
-        _grimoireOpened = !_grimoireOpened;
-
-        _grimoireTransform.DOKill();
-        _darkPanel.DOKill();
+        if (_grimoireAnimation) return;
         
+        _grimoireOpened = !_grimoireOpened;
+        _grimoireAnimation = true;
+
         if (_grimoireOpened)
         {
             _darkPanel.gameObject.SetActive(true);
-            _darkPanel.DOFade(0.5f, 0.5f);
+            _darkPanel.DOFade(0.75f, 0.5f);
             _grimoireTransform.DOAnchorPosX(0, 0.5f);
+            StartCoroutine(WaitEndAnimation());
         }
         else
         {
             _grimoireTransform.DOAnchorPosX(1500, 0.5f);
             _darkPanel.DOFade(0f, 0.5f);
-            StartCoroutine(WaitToDisable());
+            StartCoroutine(WaitEndAnimation());
         }
 
-        IEnumerator WaitToDisable()
+        IEnumerator WaitEndAnimation()
         {
             yield return new WaitForSeconds(0.5f);
 
-            _darkPanel.gameObject.SetActive(false);
+            _darkPanel.gameObject.SetActive(_grimoireOpened);
+            _grimoireAnimation = false;
         }
     }
 
@@ -93,7 +96,7 @@ public class GrimoireManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.RightShift))
+        if (Input.GetKeyDown(KeyCode.RightShift) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleGrimoire();
         }
