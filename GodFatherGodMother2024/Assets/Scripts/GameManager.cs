@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,8 @@ public class GameManager : MonoBehaviour
     private ENTITIES_ACTIONS _currentTurnAction;
     private SPELLSTATE _currentPlayerSpellState;
     private SPELLSTATE _currentHydraSpellState;
+    private SPELLSTATE _currentChargedSpell;
+    private int _countChargedTurn = 0;
 
     private bool _gameOver;
 
@@ -242,12 +245,79 @@ public class GameManager : MonoBehaviour
                         Debug.Log(outcome);
                         break;
                     case ENTITIES_ACTIONS.DEFENDRE:
+                        switch (_currentPlayerSpellState)
+                        {
+                            case SPELLSTATE.EAU:
+                                Debug.Log("Defense eau");
+                                break;
+                            case SPELLSTATE.FEU:
+                                Debug.Log("Defense feu");
+                                break;
+                            case SPELLSTATE.PLANTE:
+                                Debug.Log("Defense plante");
+                                break;
+                            default : break;
+                        }
                         break;
                     case ENTITIES_ACTIONS.BOIRE:
+                        Debug.Log("Il a bu je suis chokbar");
                         break;
                     case ENTITIES_ACTIONS.ANALYSER:
+                        switch (_currentPlayerSpellState)
+                        {
+                            case SPELLSTATE.PLANTE:
+                                if (_currentPlayerSpellState != _currentHydraSpellState)
+                                {
+                                    Debug.Log("Nop marche pas l'analyse chef");
+                                }
+                                else
+                                {
+                                    Debug.Log("PLANTE ANALYSE");
+                                }
+                                break;
+                            case SPELLSTATE.EAU:
+                                if (_currentPlayerSpellState != _currentHydraSpellState)
+                                {
+                                    Debug.Log("Nop marche pas l'analyse chef");
+                                }
+                                else
+                                {
+                                    Debug.Log("EAU ANALYSE");
+                                }
+                                break;
+                            case SPELLSTATE.FEU:
+                                if (_currentPlayerSpellState != _currentHydraSpellState)
+                                {
+                                    Debug.Log("Nop marche pas l'analyse chef");
+                                }
+                                else
+                                {
+                                    Debug.Log("FEU ANALYSE");
+                                }
+                                break;
+                            case SPELLSTATE.TETE:
+                                if (_currentPlayerSpellState != _currentHydraSpellState)
+                                {
+                                    Debug.Log("Nop marche pas l'analyse chef");
+                                }
+                                else
+                                {
+                                    Debug.Log("TETE ANALYSE ?");
+                                }
+                                break;
+                            default: 
+                                break;
+                        }
                         break;
                     case ENTITIES_ACTIONS.CHARGER:
+                        
+                        if (_countChargedTurn > 0) 
+                        {
+                            Debug.Log("Deja en charge");
+                            return; 
+                        }
+                        Debug.Log("Sort chargé");
+                        _countChargedTurn = 2;
                         break;
                 }
                 //Animation
@@ -256,10 +326,49 @@ public class GameManager : MonoBehaviour
             else
             {
                 //Debug.Log("Tour ennemi");
+                //Charged turn
+                if (_countChargedTurn == 2) _countChargedTurn -= 1;
+                else if (_countChargedTurn == 1)
+                {
+                    SPELLREACTION outcome = SPELLREACTION.NO_REACT;
+                    if (_currentHydraSpellState != SPELLSTATE.None)
+                    {
+                        outcome = CalculateReaction(_currentChargedSpell, _currentHydraSpellState);
+                    }
+                    switch (outcome)
+                    {
+                        case SPELLREACTION.NO_REACT:
+                            Debug.Log("FLOP WTF ? * 2");
+                            break;
+                        case SPELLREACTION.WEAKNESS:
+                            _isDragonStun = true;
+                            break;
+                        case SPELLREACTION.RESIST:
+                            Debug.Log("No DMG * 2");
+                            break;
+                        case SPELLREACTION.NEUTRAL:
+                            Debug.Log("Take DMG * 2");
+                            break;
+                        default:
+                            break;
+                    }
+                    _currentChargedSpell = SPELLSTATE.None;
+                    _countChargedTurn = 0;
+                    Debug.Log(outcome);
+                }
+                //Normal Turn
                 if (!_isDragonStun)
                 {
-                    Debug.Log("Roar");
                     //Defense
+                    if (_currentTurnAction == ENTITIES_ACTIONS.DEFENDRE && _currentPlayerSpellState == _currentHydraSpellState)
+                    {
+                        Debug.Log("Potite def");
+                    }
+                    else
+                    {
+                        Debug.Log("Attaque de l'hydra");
+                    }
+                    Debug.Log("Roar");
                 }
                 else 
                 {
@@ -310,24 +419,30 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Charge Fire");
         _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
+        _currentPlayerSpellState = SPELLSTATE.FEU;
+        _currentChargedSpell = SPELLSTATE.FEU;
     }
     private void ChargerEau()
     {
         Debug.Log("Charge Water");
         _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
+        _currentPlayerSpellState = SPELLSTATE.EAU;
+        _currentChargedSpell = SPELLSTATE.EAU;
     }
 
     private void ChargerPlante()
     {
         Debug.Log("Charge Plant");
         _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
-
+        _currentPlayerSpellState = SPELLSTATE.PLANTE;
+        _currentChargedSpell = SPELLSTATE.PLANTE;
     }
 
     private void AnalyserFeu()
     {
         Debug.Log("Analyse fire");
-        _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
+        _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+        _currentPlayerSpellState = SPELLSTATE.FEU;
 
     }
 
@@ -335,6 +450,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Analyse water");
         _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+        _currentPlayerSpellState = SPELLSTATE.EAU;
+
 
     }
 
@@ -342,6 +459,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Analyse plant");
         _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+        _currentPlayerSpellState = SPELLSTATE.PLANTE;
+
 
     }
 
@@ -349,6 +468,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Analyse head");
         _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+        _currentPlayerSpellState = SPELLSTATE.TETE;
 
     }
 
@@ -356,6 +476,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Defend water");
         _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
+        _currentPlayerSpellState = SPELLSTATE.EAU;
 
     }
 
@@ -363,6 +484,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Defend feu");
         _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
+        _currentPlayerSpellState = SPELLSTATE.FEU;
 
     }
 
@@ -370,6 +492,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Defend plant");
         _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
+
+        _currentPlayerSpellState = SPELLSTATE.PLANTE;
 
     }
     #endregion
@@ -435,7 +559,8 @@ public class GameManager : MonoBehaviour
         None,
         EAU,
         FEU,
-        PLANTE
+        PLANTE,
+        TETE
     }
 
     public enum SPELLREACTION
