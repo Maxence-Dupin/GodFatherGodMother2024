@@ -212,8 +212,8 @@ public class GameManager : MonoBehaviour
         {
             if (_playerTurn)
             {
-               Debug.Log("Tour joueur");
-               switch (_currentTurnAction)
+                Debug.Log("Tour joueur");
+                switch (_currentTurnAction)
                 {
                     case ENTITIES_ACTIONS.LANCER:
                         SPELLREACTION outcome = SPELLREACTION.NO_REACT;
@@ -232,15 +232,18 @@ public class GameManager : MonoBehaviour
                     case ENTITIES_ACTIONS.CHARGER:
                         break;
                 }
-
-
-               //Animation
-               StartCoroutine(WaitEndOfTurn());
+                //Animation
+                StartCoroutine(WaitEndOfTurn());
             }
             else
             {
                 //Debug.Log("Tour ennemi");
-
+                if(_currentTurnAction != ENTITIES_ACTIONS.STUN)
+                {
+                    Debug.Log("Roar");
+                    //Defense
+                }
+                //else do nothing
                 //Animation
                 StartCoroutine(WaitEndOfTurn());
             }
@@ -251,6 +254,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //SPELLS
+    #region Spells
     private void LancerFeu()
     {
         Debug.Log("Throw fire");
@@ -345,6 +350,7 @@ public class GameManager : MonoBehaviour
         _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
 
     }
+    #endregion
 
     //If a command who's not existing is called
     private void BadCommand()
@@ -394,10 +400,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(_currentTurnDuration);
 
-        //Hydre turn based
-        if (!_playerTurn) NextTurn();
-
+        //Hydra turn based
         _playerTurn = !_playerTurn;
+        
+        if(!_playerTurn) NextTurn();
     }
 
     #endregion
@@ -425,7 +431,8 @@ public class GameManager : MonoBehaviour
         CHARGER,
         BOIRE,
         DEFENDRE,
-        ANALYSER
+        ANALYSER,
+        STUN
     }
 
     #endregion
