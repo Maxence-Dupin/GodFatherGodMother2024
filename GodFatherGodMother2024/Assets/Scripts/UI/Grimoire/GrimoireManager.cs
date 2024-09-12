@@ -45,7 +45,7 @@ public class GrimoireManager : MonoBehaviour
         }
         else
         {
-            _grimoireTransform.DOAnchorPosX(1500, 0.5f);
+            _grimoireTransform.DOAnchorPosX(1600, 0.5f);
             _darkPanel.DOFade(0f, 0.5f);
             StartCoroutine(WaitEndAnimation());
         }
