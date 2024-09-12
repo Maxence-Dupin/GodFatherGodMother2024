@@ -35,10 +35,13 @@ public class CommandConsole : MonoBehaviour
             var consoleMessage = GameManager.Instance.CallSpellEvent(words[0], words[1]);
 
             _currentText.text = consoleMessage ?? "Commande inconnue.";
+
+            GameManager.Instance.onBadCommand.Invoke();
         }
         else
         {
             _currentText.text = "Commande inconnue.";
+            GameManager.Instance.onBadCommand.Invoke();
         }
     }
 

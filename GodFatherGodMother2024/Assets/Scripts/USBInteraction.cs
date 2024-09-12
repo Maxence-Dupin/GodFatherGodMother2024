@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class Program : MonoBehaviour
+public class USBInteraction : MonoBehaviour
 {
     const int DIVIDING_NUMBER = 1000000000; //Diminishing const
 
@@ -63,6 +63,7 @@ public class Program : MonoBehaviour
         while (true)
         {
             headCheck = GetHead();
+            GameManager.Instance.onHeadChange(headCheck);
             Debug.Log("Check");
             yield return waiter;
         }

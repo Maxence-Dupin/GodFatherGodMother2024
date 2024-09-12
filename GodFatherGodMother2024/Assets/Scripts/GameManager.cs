@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -21,11 +22,19 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Slider _dragonHealth;
 
     private int _baseDragonHealth;
+    private USBDeviceName _selectedDragonHead;
+
     private float _currentTurnDuration;
+    //Current turn action, hydra or player !
+    private ENTITIES_ACTIONS _currentTurnAction;
 
     private bool _gameOver;
 
     private static GameManager _instance;
+
+    public Action onBadCommand;
+
+    public Action<USBDeviceName> onHeadChange;
 
     #endregion
 
@@ -52,6 +61,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        onBadCommand.Invoke();
         return null;
     }
 
@@ -141,6 +151,10 @@ public class GameManager : MonoBehaviour
         _spellsList[21].onEventTriggered += LancerFeu;
         _spellsList[22].onEventTriggered += LancerPlante;
 
+        onBadCommand += BadCommand;
+
+        onHeadChange += HeadChange;
+
         _baseDragonHealth = _enemy.Health;
 
         NextTurn();
@@ -177,6 +191,10 @@ public class GameManager : MonoBehaviour
         _spellsList[20].onEventTriggered -= LancerEau;
         _spellsList[21].onEventTriggered -= LancerFeu;
         _spellsList[22].onEventTriggered -= LancerPlante;
+
+        onBadCommand -= BadCommand;
+
+        onHeadChange -= HeadChange;
     }
 
     #endregion
@@ -193,12 +211,14 @@ public class GameManager : MonoBehaviour
             {
                //Debug.Log("Tour joueur");
 
+               //Animation
                StartCoroutine(WaitEndOfTurn());
             }
             else
-            { 
+            {
                 //Debug.Log("Tour ennemi");
-                
+
+                //Animation
                 StartCoroutine(WaitEndOfTurn());
             }
         }
@@ -211,66 +231,99 @@ public class GameManager : MonoBehaviour
     private void LancerFeu()
     {
         Debug.Log("Throw fire");
+        _currentTurnAction = ENTITIES_ACTIONS.LANCER;
     }
     
     private void LancerEau()
     {
         Debug.Log("Throw water");
+        _currentTurnAction = ENTITIES_ACTIONS.LANCER;
     }
     
     private void LancerPlante()
     {
         Debug.Log("Throw plant");
+        _currentTurnAction = ENTITIES_ACTIONS.LANCER;
     }
     
     private void BoirePotion()
     {
         _gameTimer += 20;
+        _currentTurnAction = ENTITIES_ACTIONS.BOIRE;
     }
     
     private void ChargerFeu()
     {
         Debug.Log("Charge Fire");
+        _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
     }
     
     private void ChargerPlante()
     {
         Debug.Log("Charge Plant");
+        _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
+
     }
-    
+
     private void AnalyserFeu()
     {
         Debug.Log("Analyse fire");
+        _currentTurnAction = ENTITIES_ACTIONS.CHARGER;
+
     }
-    
+
     private void AnalyserEau()
     {
         Debug.Log("Analyse water");
+        _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+
     }
-    
+
     private void AnalyserPlante()
     {
         Debug.Log("Analyse plant");
+        _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+
     }
-    
+
     private void AnalyserTete()
     {
         Debug.Log("Analyse head");
+        _currentTurnAction = ENTITIES_ACTIONS.ANALYSER;
+
     }
-    
+
     private void DefendreEau()
     {
         Debug.Log("Defend water");
+        _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
+
     }
-    
+
     private void DefendreFeu()
     {
         Debug.Log("Defend feu");
+        _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
+
     }
-    
+
     private void DefendrePlante()
     {
         Debug.Log("Defend plant");
+        _currentTurnAction = ENTITIES_ACTIONS.DEFENDRE;
+
+    }
+
+    //If a command who's not existing is called
+    private void BadCommand()
+    {
+        Debug.Log("Error");
+    }
+
+    //When HeadEvent is called head change
+    private void HeadChange(USBDeviceName headSelected)
+    {
+        _selectedDragonHead = headSelected;
     }
 
     private IEnumerator WaitEndOfTurn()
@@ -302,6 +355,15 @@ public class GameManager : MonoBehaviour
         NEUTRAL,
         WEAKNESS,
         RESIST
+    }
+
+    private enum ENTITIES_ACTIONS
+    {
+        LANCER,
+        CHARGER,
+        BOIRE,
+        DEFENDRE,
+        ANALYSER
     }
 
     #endregion
