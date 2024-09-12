@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using DG.Tweening;
 using UnityEngine;
@@ -29,6 +30,9 @@ public class GrimoireManager : MonoBehaviour
     public void ToggleGrimoire()
     {
         _grimoireOpened = !_grimoireOpened;
+
+        _grimoireTransform.DOKill();
+        _darkPanel.DOKill();
         
         if (_grimoireOpened)
         {
@@ -90,6 +94,14 @@ public class GrimoireManager : MonoBehaviour
     private void Start()
     {
         _grimoireWords = GetComponentsInChildren<GrimoireWord>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            ToggleGrimoire();
+        }
     }
 
     #endregion

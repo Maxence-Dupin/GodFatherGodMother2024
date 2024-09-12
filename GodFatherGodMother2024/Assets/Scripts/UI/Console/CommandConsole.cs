@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CommandConsole : MonoBehaviour
 {
@@ -47,6 +48,12 @@ public class CommandConsole : MonoBehaviour
             _currentText.text = "Commande inconnue.";
             GameManager.Instance.onBadCommand.Invoke();
         }
+
+        _currentInputField.text = "";
+        
+        _currentInputField.Select();
+        _currentInputField.ActivateInputField();
+
     }
 
     #endregion
@@ -57,6 +64,18 @@ public class CommandConsole : MonoBehaviour
     {
         _currentInputField = _inputFieldPrefab;
         _currentText = _textPrefab;
+        
+        _currentInputField.Select();
+        _currentInputField.ActivateInputField();
+    }
+
+    private void Update()
+    {
+        if (EventSystem.current.currentSelectedGameObject != _currentInputField.gameObject)
+        {
+            _currentInputField.Select();
+            _currentInputField.ActivateInputField();
+        }
     }
 
     #endregion
