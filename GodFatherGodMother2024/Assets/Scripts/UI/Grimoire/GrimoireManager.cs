@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,23 +56,17 @@ public class GrimoireManager : MonoBehaviour
         }
     }
 
-    public void CheckGrimoireLetters(string firstWord, string secondWord)
+    public void CheckGrimoireLetters(List<string> words)
     {
         for (var i = 0; i < _grimoireWords.Length; i++)
         {
-            if (_grimoireWords[i].Word == firstWord)
+            for (var j = 0; j < words.Count; j++)
             {
-                for (var j = 0; j < _grimoireWords[i].LetterTexts.Length; j++)
+                if (_grimoireWords[i].Word != words[j]) continue;
+                
+                for (var k = 0; k < _grimoireWords[i].LetterTexts.Length; k++)
                 {
-                    _grimoireWords[i].LetterTexts[j].enabled = true;
-                }
-            }
-            
-            if (_grimoireWords[i].Word == secondWord)
-            {
-                for (var j = 0; j < _grimoireWords[i].LetterTexts.Length; j++)
-                {
-                    _grimoireWords[i].LetterTexts[j].enabled = true;
+                    _grimoireWords[i].LetterTexts[k].enabled = true;
                 }
             }
         }

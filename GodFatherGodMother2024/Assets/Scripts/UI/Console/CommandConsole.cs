@@ -22,7 +22,7 @@ public class CommandConsole : MonoBehaviour
     public void EnterCommand()
     {
         var words = new List<string>(_currentInputField.text.Split(" "));
-        
+
         for (var i = 0 ; i < words.Count ; i++)
         {
             if (words[i] != "" && words[i] != " ") continue;
@@ -30,18 +30,18 @@ public class CommandConsole : MonoBehaviour
             words.Remove(words[i]);
             i--;
         }
+        
+        GrimoireManager.Instance.CheckGrimoireLetters(words);
 
         if (words.Count == 2)
         {
             var consoleMessage = GameManager.Instance.CallSpellEvent(words[0], words[1]);
-
             _currentText.text = consoleMessage ?? "Commande inconnue.";
 
-            if (consoleMessage != null)
+            if (consoleMessage == null)
             {
-                GrimoireManager.Instance.CheckGrimoireLetters(words[0], words[1]);
+                GameManager.Instance.onBadCommand.Invoke();
             }
-            GameManager.Instance.onBadCommand.Invoke();
         }
         else
         {
