@@ -46,7 +46,7 @@ public class CommandConsole : MonoBehaviour
         else
         {
             _currentText.text = "Commande inconnue.";
-            GameManager.Instance.onBadCommand.Invoke();
+            GameManager.Instance.onBadCommand?.Invoke();
         }
 
         _currentInputField.text = "";
