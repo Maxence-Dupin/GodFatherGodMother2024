@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private int _baseDragonHealth;
     private USBDeviceName _selectedDragonHead;
     private Dragon.DragonHead _headClassSelected;
+    private bool _isDragonStun = false;
 
     private float _currentTurnDuration;
     //Current turn action, hydra or player !
@@ -221,6 +222,23 @@ public class GameManager : MonoBehaviour
                         {
                             outcome = CalculateReaction(_currentPlayerSpellState, _currentHydraSpellState);
                         }
+                        switch (outcome)
+                        {
+                            case SPELLREACTION.NO_REACT:
+                                Debug.Log("FLOP WTF ?");
+                                break;
+                            case SPELLREACTION.WEAKNESS:
+                                _isDragonStun = true;
+                                break;
+                            case SPELLREACTION.RESIST:
+                                Debug.Log("No DMG");
+                                break;
+                            case SPELLREACTION.NEUTRAL:
+                                Debug.Log("Take DMG");
+                                break;
+                            default:
+                                break;
+                        }
                         Debug.Log(outcome);
                         break;
                     case ENTITIES_ACTIONS.DEFENDRE:
@@ -238,12 +256,16 @@ public class GameManager : MonoBehaviour
             else
             {
                 //Debug.Log("Tour ennemi");
-                if(_currentTurnAction != ENTITIES_ACTIONS.STUN)
+                if (!_isDragonStun)
                 {
                     Debug.Log("Roar");
                     //Defense
                 }
-                //else do nothing
+                else 
+                {
+                    Debug.Log("Stun !");
+                    _isDragonStun = false;
+                }
                 //Animation
                 StartCoroutine(WaitEndOfTurn());
             }
@@ -405,7 +427,6 @@ public class GameManager : MonoBehaviour
         
         if(!_playerTurn) NextTurn();
     }
-
     #endregion
 
     #region Enum
