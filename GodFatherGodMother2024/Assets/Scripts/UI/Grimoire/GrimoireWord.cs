@@ -1,12 +1,13 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrimoireWord : MonoBehaviour
 {
     #region Fields
 
     [SerializeField] private string _word;
-    [SerializeField] private TextMeshProUGUI[] _letterTexts;
+    [SerializeField] private Image _image;
+    [SerializeField] private Sprite _secondSprite;
 
     #endregion
 
@@ -14,18 +15,13 @@ public class GrimoireWord : MonoBehaviour
 
     public string Word => _word;
 
-    public TextMeshProUGUI[] LetterTexts => _letterTexts;
-
     #endregion
 
-    #region Unity Event Functions
+    #region Public Methods
 
-    private void Start()
+    public void UpdateImage()
     {
-        for (var i = 0; i < _word.Length; i++)
-        {
-            _letterTexts[i].text = _word[i].ToString();
-        }
+        _image.sprite = _secondSprite;
     }
 
     #endregion

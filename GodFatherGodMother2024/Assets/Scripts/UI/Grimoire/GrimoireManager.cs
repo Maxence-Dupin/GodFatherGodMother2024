@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class GrimoireManager : MonoBehaviour
@@ -29,6 +30,8 @@ public class GrimoireManager : MonoBehaviour
     public static GrimoireManager Instance => _instance;
 
     public bool PauseMenuOpened => _pauseMenuOpened;
+    
+    public bool GrimoireOpened => _grimoireOpened;
 
     #endregion
 
@@ -43,6 +46,7 @@ public class GrimoireManager : MonoBehaviour
 
         if (_grimoireOpened)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             _darkPanel.gameObject.SetActive(true);
             _darkPanel.DOFade(0.75f, 0.5f);
             _grimoireTransform.DOAnchorPosX(0, 0.5f);
@@ -50,7 +54,7 @@ public class GrimoireManager : MonoBehaviour
         }
         else
         {
-            _grimoireTransform.DOAnchorPosX(1600, 0.5f);
+            _grimoireTransform.DOAnchorPosX(1700, 0.5f);
             if (!_pauseMenuOpened)
             {
                 _darkPanel.DOFade(0f, 0.5f);
@@ -70,12 +74,18 @@ public class GrimoireManager : MonoBehaviour
     public void TogglePause()
     {
         if (_pauseMenuAnimation) return;
+
+        if (_grimoireOpened)
+        {
+            ToggleGrimoire();
+        }
         
         _pauseMenuOpened = !_pauseMenuOpened;
         _pauseMenuAnimation = true;
 
         if (_pauseMenuOpened)
         {
+            EventSystem.current.SetSelectedGameObject(null);
             _darkPanel.gameObject.SetActive(true);
             _darkPanel.DOFade(0.75f, 0.5f);
             _pauseMenuTransform.DOAnchorPosY(-20f, 0.5f);
@@ -108,10 +118,7 @@ public class GrimoireManager : MonoBehaviour
             {
                 if (_grimoireWords[i].Word != words[j]) continue;
                 
-                for (var k = 0; k < _grimoireWords[i].LetterTexts.Length; k++)
-                {
-                    _grimoireWords[i].LetterTexts[k].enabled = true;
-                }
+                _grimoireWords[i].UpdateImage();
             }
         }
     }

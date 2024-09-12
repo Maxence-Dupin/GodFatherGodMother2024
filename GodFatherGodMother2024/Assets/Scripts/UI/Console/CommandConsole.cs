@@ -28,6 +28,8 @@ public class CommandConsole : MonoBehaviour
 
     public void EnterCommand()
     {
+        if (!Input.GetKeyDown(KeyCode.Return)) return;
+        
         var words = new List<string>(_currentInputField.text.Split(" "));
 
         for (var i = 0 ; i < words.Count ; i++)
@@ -102,7 +104,7 @@ public class CommandConsole : MonoBehaviour
 
     private void Update()
     {
-        if (GrimoireManager.Instance.PauseMenuOpened) return;
+        if (GrimoireManager.Instance.PauseMenuOpened || GrimoireManager.Instance.GrimoireOpened) return;
 
             if (EventSystem.current.currentSelectedGameObject != _currentInputField.gameObject)
         {
