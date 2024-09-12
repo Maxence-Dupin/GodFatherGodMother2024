@@ -137,10 +137,7 @@ public class GameManager : MonoBehaviour
         }
 
         _instance = this;
-    }
 
-    private void Start()
-    {
         _spellsList[0].onEventTriggered += AnalyserEau;
         _spellsList[1].onEventTriggered += AnalyserFeu;
         _spellsList[2].onEventTriggered += AnalyserPlante;
@@ -159,10 +156,11 @@ public class GameManager : MonoBehaviour
         onBadCommand += BadCommand;
 
         onHeadChange += HeadChange;
+    }
 
+    private void Start()
+    {
         _baseDragonHealth = _enemy.Health;
-
-        NextTurn();
     }
 
     private void Update()
@@ -214,11 +212,15 @@ public class GameManager : MonoBehaviour
         {
             if (_playerTurn)
             {
-               //Debug.Log("Tour joueur");
+               Debug.Log("Tour joueur");
                switch (_currentTurnAction)
                 {
                     case ENTITIES_ACTIONS.LANCER:
-                        SPELLREACTION outcome = CalculateReaction(_currentPlayerSpellState, _currentHydraSpellState);
+                        SPELLREACTION outcome = SPELLREACTION.NO_REACT;
+                        if (_currentHydraSpellState != SPELLSTATE.None)
+                        {
+                            outcome = CalculateReaction(_currentPlayerSpellState, _currentHydraSpellState);
+                        }
                         Debug.Log(outcome);
                         break;
                     case ENTITIES_ACTIONS.DEFENDRE:
@@ -359,24 +361,31 @@ public class GameManager : MonoBehaviour
         {
             case USBDeviceName.MiddleHead:
                 _headClassSelected = _enemy.DragonHeads[1];
+                _currentHydraSpellState = _headClassSelected.Element;
+
                 break;
             case USBDeviceName.RightHead:
                 _headClassSelected = _enemy.DragonHeads[2];
+                _currentHydraSpellState = _headClassSelected.Element;
+
                 break;
             case USBDeviceName.LeftHead:
                 _headClassSelected = _enemy.DragonHeads[0];
+                _currentHydraSpellState = _headClassSelected.Element;
+
                 break;
             case USBDeviceName.Multiple:
                 Debug.Log("Error");
+                _currentHydraSpellState = SPELLSTATE.None;
+
                 break;
             case USBDeviceName.None:
                 Debug.Log("Error");
+                _currentHydraSpellState = SPELLSTATE.None;
                 break;
             default:
                 break;
         }
-
-        _currentHydraSpellState = _headClassSelected.Element;
     }
 
     private IEnumerator WaitEndOfTurn()

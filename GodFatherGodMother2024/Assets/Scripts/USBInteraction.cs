@@ -30,7 +30,7 @@ public class USBInteraction : MonoBehaviour
         */
 
 
-        Debug.Log(GetHead());
+        //Debug.Log(GetHead());
     }
 
     static List<USBDeviceInfo> GetUSBDevices()
@@ -64,7 +64,7 @@ public class USBInteraction : MonoBehaviour
         {
             headCheck = GetHead();
             GameManager.Instance.onHeadChange(headCheck);
-            Debug.Log("Check");
+            //Debug.Log("Check");
             yield return waiter;
         }
     }
