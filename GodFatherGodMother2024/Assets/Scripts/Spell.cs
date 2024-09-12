@@ -3,25 +3,41 @@ using UnityEngine;
 
 public enum ActionWords
 {
-    Throw,
-    Defend,
-    Heal
+    BOIRE,
+    LANCER,
+    CHARGER,
+    ANALYSER,
+    DEFENDRE,
 }
 
 public enum ElementWords
 {
-    Fire,
-    Water,
-    Earth,
-    Air,
-    Potion
+    FEU,
+    EAU,
+    PLANTE,
+    TETE,
+    POTION
 }
 
 [CreateAssetMenu(fileName = "New Spell", menuName = "Custom/Spell")]
 public class Spell : ScriptableObject
 {
-    public ActionWords action;
-    public ElementWords element;
+    #region Fields
+
+    [SerializeField] private ActionWords _action;
+    [SerializeField] private ElementWords _element;
+
+    [SerializeField, TextArea] private string _message;
 
     public Action onEventTriggered;
+
+    #endregion
+
+    #region Properties
+
+    public ActionWords Action => _action;
+    public ElementWords Element => _element;
+    public string Message => _message;
+
+    #endregion
 }
