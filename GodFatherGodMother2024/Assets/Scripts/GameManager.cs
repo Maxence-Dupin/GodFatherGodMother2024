@@ -50,6 +50,62 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    public SPELLREACTION CalculateReaction(SPELLSTATE spellStateATK, SPELLSTATE spellStateDEF)
+    {
+        SPELLREACTION _spellReaction = SPELLREACTION.NO_REACT;
+        switch (spellStateATK)
+        {
+            case SPELLSTATE.EAU:
+                if(spellStateDEF == SPELLSTATE.EAU)
+                {
+                    _spellReaction = SPELLREACTION.NEUTRAL;
+                }
+                if (spellStateDEF == SPELLSTATE.FEU)
+                {
+                    _spellReaction = SPELLREACTION.WEAKNESS;
+                }
+                if (spellStateDEF == SPELLSTATE.PLANTE)
+                {
+                    _spellReaction = SPELLREACTION.RESIST;
+                }
+                break;
+            case SPELLSTATE.PLANTE:
+                if (spellStateDEF == SPELLSTATE.EAU)
+                {
+                    _spellReaction = SPELLREACTION.WEAKNESS;
+                }
+                if (spellStateDEF == SPELLSTATE.FEU)
+                {
+                    _spellReaction = SPELLREACTION.RESIST;
+                }
+                if (spellStateDEF == SPELLSTATE.PLANTE)
+                {
+                    _spellReaction = SPELLREACTION.NEUTRAL;
+                }
+                break;
+            case SPELLSTATE.FEU:
+                if (spellStateDEF == SPELLSTATE.EAU)
+                {
+                    _spellReaction = SPELLREACTION.RESIST;
+                }
+                if (spellStateDEF == SPELLSTATE.FEU)
+                {
+                    _spellReaction = SPELLREACTION.NEUTRAL;
+                }
+                if (spellStateDEF == SPELLSTATE.PLANTE)
+                {
+                    _spellReaction = SPELLREACTION.WEAKNESS;
+                }
+                break;
+            case SPELLSTATE.None:
+                break;
+            default:
+                break;
+        }
+
+        return _spellReaction;
+    }
+
     #endregion
 
     #region Unity Event Functions
@@ -213,8 +269,29 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(_currentTurnDuration);
 
+        //Hydre turn based
+        if (!_playerTurn) NextTurn();
+
         _playerTurn = !_playerTurn;
-        NextTurn();
+    }
+
+    #endregion
+
+    #region Enum
+    public enum SPELLSTATE
+    {
+        None,
+        EAU,
+        FEU,
+        PLANTE
+    }
+
+    public enum SPELLREACTION
+    {
+        NO_REACT,
+        NEUTRAL,
+        WEAKNESS,
+        RESIST
     }
 
     #endregion
