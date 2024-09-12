@@ -12,7 +12,7 @@ public class GrimoireManager : MonoBehaviour
 
     private bool _grimoireOpened;
 
-    private GrimoireLetter[] _grimoireLetters;
+    private GrimoireWord[] _grimoireWords;
 
     private static GrimoireManager _instance;
 
@@ -53,32 +53,21 @@ public class GrimoireManager : MonoBehaviour
 
     public void CheckGrimoireLetters(string firstWord, string secondWord)
     {
-        for (var i = 0; i < firstWord.Length; i++)
+        for (var i = 0; i < _grimoireWords.Length; i++)
         {
-            for (var j = 0; j < _grimoireLetters.Length; j++)
+            if (_grimoireWords[i].Word == firstWord)
             {
-                var letter = _grimoireLetters[j];
-
-                if (letter.LetterText.enabled) continue;
-
-                if (letter.Letter == firstWord[i])
+                for (var j = 0; j < _grimoireWords[i].LetterTexts.Length; j++)
                 {
-                    letter.LetterText.enabled = true;
+                    _grimoireWords[i].LetterTexts[j].enabled = true;
                 }
             }
-        }
-        
-        for (var i = 0; i < secondWord.Length; i++)
-        {
-            for (var j = 0; j < _grimoireLetters.Length; j++)
+            
+            if (_grimoireWords[i].Word == secondWord)
             {
-                var letter = _grimoireLetters[j];
-
-                if (letter.LetterText.enabled) continue;
-
-                if (letter.Letter == secondWord[i])
+                for (var j = 0; j < _grimoireWords[i].LetterTexts.Length; j++)
                 {
-                    letter.LetterText.enabled = true;
+                    _grimoireWords[i].LetterTexts[j].enabled = true;
                 }
             }
         }
@@ -100,7 +89,7 @@ public class GrimoireManager : MonoBehaviour
 
     private void Start()
     {
-        _grimoireLetters = GetComponentsInChildren<GrimoireLetter>();
+        _grimoireWords = GetComponentsInChildren<GrimoireWord>();
     }
 
     #endregion
