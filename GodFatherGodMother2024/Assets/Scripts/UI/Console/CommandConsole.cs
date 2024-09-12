@@ -36,6 +36,10 @@ public class CommandConsole : MonoBehaviour
 
             _currentText.text = consoleMessage ?? "Commande inconnue.";
 
+            if (consoleMessage != null)
+            {
+                GrimoireManager.Instance.CheckGrimoireLetters(words[0], words[1]);
+            }
             GameManager.Instance.onBadCommand.Invoke();
         }
         else
