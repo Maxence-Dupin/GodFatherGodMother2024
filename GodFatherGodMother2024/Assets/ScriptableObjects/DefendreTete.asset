@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa4f93dd69631f140bed8aace86ddb6b, type: 3}
-  m_Name: LancerFeu
+  m_Name: DefendreTete
   m_EditorClassIdentifier: 
-  _action: 1
-  _element: 0
-  _message: 
+  _action: 4
+  _element: 3
+  _message: "D\xE9fendre la t\xEAte ? Mauvaise strat\xE9gie, sauf si tu veux la prot\xE9ger
+    toi-m\xEAme."
