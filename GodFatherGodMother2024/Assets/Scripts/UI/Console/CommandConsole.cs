@@ -7,13 +7,20 @@ public class CommandConsole : MonoBehaviour
 {
     #region Fields
 
+    
     [SerializeField] private TMP_InputField _inputFieldPrefab;
     [SerializeField] private TextMeshProUGUI _textPrefab;
+    [SerializeField] private TMP_InputField _firstInputField;
+    [SerializeField] private TextMeshProUGUI _firstText;
+    [SerializeField] private RectTransform _content;
 
     [Space(10)] private Transform _viewport;
 
     private TMP_InputField _currentInputField;
     private TextMeshProUGUI _currentText;
+
+    private List<TMP_InputField> _inputFields = new();
+    private List<TextMeshProUGUI> _texts = new();
 
     #endregion
 
@@ -49,11 +56,32 @@ public class CommandConsole : MonoBehaviour
             GameManager.Instance.onBadCommand?.Invoke();
         }
 
-        _currentInputField.text = "";
+        _currentInputField.interactable = false;
+
+        _currentInputField = Instantiate(_inputFieldPrefab, _content);
+        _currentText = Instantiate(_textPrefab, _content);
+
+        _currentInputField.onEndEdit.AddListener((arg0 => EnterCommand()));
+
+        _inputFields.Add(_currentInputField);
+        _texts.Add(_currentText);
+
+        if (_inputFields.Count > 2)
+        {
+            var inputField = _inputFields[0];
+            _inputFields.Remove(inputField);
+            Destroy(inputField.gameObject);
+        }
+        
+        if (_texts.Count > 2)
+        {
+            var text = _texts[0];
+            _texts.Remove(text);
+            Destroy(text.gameObject);
+        }
         
         _currentInputField.Select();
         _currentInputField.ActivateInputField();
-
     }
 
     #endregion
@@ -62,8 +90,11 @@ public class CommandConsole : MonoBehaviour
 
     private void Start()
     {
-        _currentInputField = _inputFieldPrefab;
-        _currentText = _textPrefab;
+        _currentInputField = _firstInputField;
+        _currentText = _firstText;
+        
+        _inputFields.Add(_currentInputField);
+        _texts.Add(_currentText);
         
         _currentInputField.Select();
         _currentInputField.ActivateInputField();
