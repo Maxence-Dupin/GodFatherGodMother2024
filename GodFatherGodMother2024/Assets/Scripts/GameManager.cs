@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,14 +8,15 @@ public class GameManager : MonoBehaviour
     #region Fields
 
     [SerializeField] private List<Spell> _spellsList;
-    
+
     [Header("Start Parameters")]
     [SerializeField] private bool _playerTurn;
     [SerializeField] private float _gameTimer;
 
-    [Header("Entity Set Up")] 
+    [Header("Set Up")] 
     [SerializeField] private Player _player;
     [SerializeField] private Dragon _enemy;
+    [SerializeField] private TextMeshProUGUI _timerText;
     
     private float _currentTurnDuration;
 
@@ -88,10 +90,13 @@ public class GameManager : MonoBehaviour
         if (_gameOver) return;
         
         _gameTimer -= Time.deltaTime;
+        var timerValue = (int)_gameTimer + 1;
+        _timerText.text = timerValue.ToString();
 
         if (_gameTimer <= 0 && !_gameOver)
         {
             _gameOver = true;
+            _timerText.text = "0";
             //Debug.Log("Game Over");
         }
     }
