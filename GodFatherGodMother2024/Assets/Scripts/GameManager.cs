@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,7 +18,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Player _player;
     [SerializeField] private Dragon _enemy;
     [SerializeField] private TextMeshProUGUI _timerText;
-    
+    [SerializeField] private Slider _dragonHealth;
+
+    private int _baseDragonHealth;
     private float _currentTurnDuration;
 
     private bool _gameOver;
@@ -81,6 +84,8 @@ public class GameManager : MonoBehaviour
         _spellsList[20].onEventTriggered += LancerEau;
         _spellsList[21].onEventTriggered += LancerFeu;
         _spellsList[22].onEventTriggered += LancerPlante;
+
+        _baseDragonHealth = _enemy.Health;
 
         NextTurn();
     }
@@ -164,7 +169,7 @@ public class GameManager : MonoBehaviour
     
     private void BoirePotion()
     {
-        Debug.Log("Drink Potion");
+        _gameTimer += 20;
     }
     
     private void ChargerFeu()
