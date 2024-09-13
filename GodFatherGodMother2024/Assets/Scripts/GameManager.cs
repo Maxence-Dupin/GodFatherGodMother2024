@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,13 +13,17 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<Spell> _spellsList;
 
-    [Header("Start Parameters")]
+    [Header("Parameters")]
     [SerializeField] private bool _playerTurn;
     [SerializeField] private float _gameTimer;
+    [SerializeField] private int _cooldownTurnsNumber;
+    [SerializeField] private int _fireHeadTimerDamage;
+    [SerializeField] private int _plantHeadCooldownOnSpell;
 
     [Header("Set Up")] 
     [SerializeField] private Player _player;
     [SerializeField] private Dragon _enemy;
+    [SerializeField] private CommandConsole _console;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
 
@@ -34,7 +38,7 @@ public class GameManager : MonoBehaviour
     private SPELLSTATE _currentPlayerSpellState;
     private SPELLSTATE _currentHydraSpellState;
     private SPELLSTATE _currentChargedSpell;
-    private int _countChargedTurn = 0;
+    private int _countChargedTurn;
 
     private bool _gameOver;
 
@@ -43,6 +47,8 @@ public class GameManager : MonoBehaviour
     public Action onBadCommand;
 
     public Action<USBDeviceName> onHeadChange;
+    
+    private Dictionary<string, int> _spellsCooldown = new();
 
     #endregion
 
@@ -58,12 +64,19 @@ public class GameManager : MonoBehaviour
 
     public string CallSpellEvent(string actionWord, string elementWord)
     {
+        if (_spellsCooldown.ContainsKey(elementWord) || _spellsCooldown.ContainsKey(actionWord))
+        {
+            NextTurn();
+            return "Le sort n'est pas utilisable pour le moment.";
+        }
+        
         for (var i = 0; i < _spellsList.Count; i++)
         {
             var spell = _spellsList[i];
             
             if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
             {
+                _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
                 spell.onEventTriggered?.Invoke();
                 NextTurn();
                 return spell.Message;
@@ -243,13 +256,17 @@ public class GameManager : MonoBehaviour
                                 Debug.Log("FLOP WTF ?");
                                 break;
                             case SPELLREACTION.WEAKNESS:
+                                _console.ShowMessage(
+                                    "Elle a pris cher ! Vu comme tu l’as sonnée, tu peux sûrement réaliser une nouvelle action avant qu’elle réagisse.");
                                 _isDragonStun = true;
                                 HeadDamage(10);
                                 break;
                             case SPELLREACTION.RESIST:
+                                _console.ShowMessage("Oups, ce n’est pas très efficace… J’espère que tu sais faire mieux.");
                                 Debug.Log("No DMG");
                                 break;
                             case SPELLREACTION.NEUTRAL:
+                                _console.ShowMessage("Pas mal, tu peux mieux faire mais tu peux aussi faire pire.");
                                 Debug.Log("Take DMG");
                                 HeadDamage(5);
                                 break;
@@ -330,7 +347,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Deja en charge");
                             return; 
                         }
-                        Debug.Log("Sort charg�");
+                        Debug.Log("Sort charg�");
                         _countChargedTurn = 2;
                         break;
                 }
@@ -341,6 +358,25 @@ public class GameManager : MonoBehaviour
             {
                 //Debug.Log("Tour ennemi");
                 //Charged turn
+
+                var temp = new Dictionary<string, int>();
+                
+                foreach (var pair in _spellsCooldown)
+                {
+                    temp.Add(pair.Key, pair.Value);
+                    Debug.Log(pair.Key + ", " + pair.Value);
+                }
+                
+                foreach (var pair in temp)
+                {
+                    _spellsCooldown[pair.Key]--;
+
+                    if (_spellsCooldown[pair.Key] <= 0)
+                    {
+                        _spellsCooldown.Remove(pair.Key);
+                    }
+                }
+                
                 if (_countChargedTurn == 2) _countChargedTurn -= 1;
                 else if (_countChargedTurn == 1)
                 {
@@ -382,6 +418,26 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
+                        switch(_currentHydraSpellState)
+                        {
+                            case SPELLSTATE.None:
+                                Debug.Log("State de l'hydra à none ???");
+                                break;
+                            case SPELLSTATE.EAU:
+                                break;
+                            case SPELLSTATE.FEU:
+                                _gameTimer -= _fireHeadTimerDamage;
+                                break;
+                            case SPELLSTATE.PLANTE:
+                                SetCooldownOnARandomVerb();
+                                break;
+                            case SPELLSTATE.TETE:
+                                Debug.Log("State de l'hydra sur tete ???");
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
                         Debug.Log("Attaque de l'hydra");
                     }
                     Debug.Log("Roar");
@@ -561,6 +617,29 @@ public class GameManager : MonoBehaviour
     private void HeadDamage(int dmg)
     {
         _headClassSelected.HealthPerHead -= dmg;
+    }
+    private void SetCooldownOnARandomVerb()
+    {
+        string spellToBlock = null;
+
+        while (spellToBlock == null || _spellsCooldown.ContainsKey(spellToBlock))
+        {
+            var random = Random.Range(0, 5);
+
+            spellToBlock = random switch
+            {
+                0 => "BOIRE",
+                1 => "LANCER",
+                2 => "CHARGER",
+                3 => "ANALYSER",
+                4 => "DEFENDRE",
+                _ => null
+            };
+        }
+        
+        Debug.Log(spellToBlock);
+
+        _spellsCooldown.Add(spellToBlock, _plantHeadCooldownOnSpell);
     }
 
     private IEnumerator WaitEndOfTurn()

@@ -22,7 +22,7 @@ public class GrimoireManager : MonoBehaviour
 
     private bool _grimoireAnimation;
     private bool _pauseMenuAnimation;
-
+    
     #endregion
 
     #region Properties
@@ -32,7 +32,7 @@ public class GrimoireManager : MonoBehaviour
     public bool PauseMenuOpened => _pauseMenuOpened;
     
     public bool GrimoireOpened => _grimoireOpened;
-
+    
     #endregion
 
     #region Public Methods
