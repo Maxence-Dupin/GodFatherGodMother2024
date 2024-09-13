@@ -79,6 +79,12 @@ public class GameManager : MonoBehaviour
                 _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
                 spell.onEventTriggered?.Invoke();
                 NextTurn();
+
+                if (_headClassSelected == null)
+                {
+                    return "Aucune tête n'est séléctionnée. Pour selectionner une tête, branche un cable !";
+                }
+
                 return spell.Message;
             }
         }
@@ -234,10 +240,9 @@ public class GameManager : MonoBehaviour
         
         if(_headClassSelected == null)
         {
-            
+            Debug.Log("PAS DE TETE");
         }
-
-        if (_headClassSelected.HealthPerHead > 0)
+        else if (_headClassSelected.HealthPerHead > 0)
         {
             if (_playerTurn)
             {
