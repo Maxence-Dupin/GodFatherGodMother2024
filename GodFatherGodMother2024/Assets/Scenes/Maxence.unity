@@ -1099,7 +1099,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7efffa63bd30dbf44b0dd60e11b3edf7, type: 2}
   _playerTurn: 1
   _gameTimer: 300
-  _cooldownTurnsNumber: 1
+  _dragonLife: 60
+  _cooldownTurnsNumber: 2
   _fireHeadTimerDamage: 20
   _plantHeadCooldownOnSpell: 1
   _headColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
@@ -3335,7 +3336,7 @@ MonoBehaviour:
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 850, y: 60}
-  m_Spacing: {x: 0, y: 0}
+  m_Spacing: {x: 0, y: 20}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!1 &1056263551

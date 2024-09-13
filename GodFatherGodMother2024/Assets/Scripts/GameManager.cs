@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] private bool _playerTurn;
     [SerializeField] private float _gameTimer;
+    [SerializeField] private int _dragonLife;
     [SerializeField] private int _cooldownTurnsNumber;
     [SerializeField] private int _fireHeadTimerDamage;
     [SerializeField] private int _plantHeadCooldownOnSpell;
@@ -49,6 +50,9 @@ public class GameManager : MonoBehaviour
     private SPELLSTATE _currentHydraSpellState;
     private SPELLSTATE _currentChargedSpell;
     private int _countChargedTurn;
+    private int _basedLife;
+
+    public bool blockInput;
 
     private bool _gameOver;
 
@@ -71,6 +75,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance => _instance;
 
     public Dictionary<string, int> SpellsCooldown => _spellsCooldown;
+
+    public bool PlayerTurn => _playerTurn;
 
     #endregion
 
@@ -218,6 +224,7 @@ public class GameManager : MonoBehaviour
         }
         
         _matrix.Play();
+        _basedLife = _dragonLife;
     }
 
     private void Update()
@@ -229,7 +236,7 @@ public class GameManager : MonoBehaviour
         _timerText.text = timerValue.ToString();
         if(_headClassSelected != null)
         {
-            _dragonHealth.value = (float)_headClassSelected.HealthPerHead / _headClassSelected.MaxHealthPerHead;
+            _dragonHealth.value = (float)_dragonLife / _basedLife;
         }
         if (_gameTimer <= 0 && !_gameOver)
         {
@@ -719,7 +726,7 @@ public class GameManager : MonoBehaviour
 
     private void HeadDamage(int dmg)
     {
-        _headClassSelected.HealthPerHead -= dmg;
+        _dragonLife -= dmg;
     }
     private void SetCooldownOnARandomVerb()
     {
@@ -758,8 +765,15 @@ public class GameManager : MonoBehaviour
         }
         //Hydra turn based
         _playerTurn = !_playerTurn;
-        
-        if(!_playerTurn) NextTurn();
+
+        if (!_playerTurn)
+        {
+            NextTurn();
+        }
+        else
+        {
+            blockInput = false;
+        }
     }
     #endregion
 

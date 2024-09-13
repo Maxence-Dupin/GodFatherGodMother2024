@@ -49,7 +49,11 @@ public class CommandConsole : MonoBehaviour
         if (words.Count == 2)
         {
             var consoleMessage = GameManager.Instance.CallSpellEvent(words[0], words[1]);
-            _currentText.text = consoleMessage ?? "Commande inconnue.";
+
+            if (_currentText.text == null || _currentText.text == "")
+            {
+                _currentText.text = consoleMessage ?? "Commande inconnue.";
+            }
 
             if (consoleMessage == null)
             {
@@ -88,6 +92,8 @@ public class CommandConsole : MonoBehaviour
         
         _currentInputField.Select();
         _currentInputField.ActivateInputField();
+
+        GameManager.Instance.blockInput = true;
     }
 
     public void ShowMessage(string message)
@@ -138,11 +144,17 @@ public class CommandConsole : MonoBehaviour
     private void Update()
     {
         if (GrimoireManager.Instance.PauseMenuOpened || GrimoireManager.Instance.GrimoireOpened) return;
-
-            if (EventSystem.current.currentSelectedGameObject != _currentInputField.gameObject)
+        
+        if (EventSystem.current.currentSelectedGameObject != _currentInputField.gameObject && GameManager.Instance.PlayerTurn)
         {
             _currentInputField.Select();
             _currentInputField.ActivateInputField();
+        }
+
+        if (GameManager.Instance.blockInput)
+        {
+            _currentInputField.text = null;
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
 
