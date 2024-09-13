@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -50,6 +49,8 @@ public class GameManager : MonoBehaviour
     
     private Dictionary<string, int> _spellsCooldown = new();
 
+    private bool _underWaterEffect;
+
     #endregion
 
     #region Properties
@@ -73,22 +74,31 @@ public class GameManager : MonoBehaviour
         for (var i = 0; i < _spellsList.Count; i++)
         {
             var spell = _spellsList[i];
-            
-            if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
+
+            if (!_underWaterEffect)
             {
-                _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
-                spell.onEventTriggered?.Invoke();
-                NextTurn();
-
-                if (_headClassSelected == null)
+                if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
                 {
-                    return "Aucune tête n'est séléctionnée. Pour selectionner une tête, branche un cable !";
+                    _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
+                    spell.onEventTriggered?.Invoke();
+                    NextTurn();
+                    return spell.Message;
                 }
-
-                return spell.Message;
+            }
+            else
+            {
+                if (elementWord == spell.Action.ToString() && actionWord == spell.Element.ToString())
+                {
+                    Debug.Log(elementWord + ", " + actionWord);
+                    _spellsCooldown.Add(actionWord, _cooldownTurnsNumber + 1);
+                    spell.onEventTriggered?.Invoke();
+                    NextTurn();
+                    return spell.Message;
+                }
             }
         }
 
+        _underWaterEffect = false;
         onBadCommand.Invoke();
         return null;
     }
@@ -166,6 +176,7 @@ public class GameManager : MonoBehaviour
         _spellsList[1].onEventTriggered += AnalyserFeu;
         _spellsList[2].onEventTriggered += AnalyserPlante;
         _spellsList[4].onEventTriggered += AnalyserTete;
+        _spellsList[6].onEventTriggered += BoireFeu;
         _spellsList[8].onEventTriggered += BoirePotion;
         _spellsList[10].onEventTriggered += ChargerEau;
         _spellsList[11].onEventTriggered += ChargerFeu;
@@ -176,6 +187,7 @@ public class GameManager : MonoBehaviour
         _spellsList[20].onEventTriggered += LancerEau;
         _spellsList[21].onEventTriggered += LancerFeu;
         _spellsList[22].onEventTriggered += LancerPlante;
+        _spellsList[23].onEventTriggered += LancerPotion;
 
         onBadCommand += BadCommand;
 
@@ -255,6 +267,12 @@ public class GameManager : MonoBehaviour
                         {
                             outcome = CalculateReaction(_currentPlayerSpellState, _currentHydraSpellState);
                         }
+
+                        if (_currentPlayerSpellState == SPELLSTATE.POTION)
+                        {
+                            HeadDamage(-10);
+                        }
+                        
                         switch (outcome)
                         {
                             case SPELLREACTION.NO_REACT:
@@ -429,6 +447,8 @@ public class GameManager : MonoBehaviour
                                 Debug.Log("State de l'hydra à none ???");
                                 break;
                             case SPELLSTATE.EAU:
+                                _console.ShowIndependantMessage("Vous êtes sous l'effet de la tête d'eau, inversez l'ordre des mots pour votre prochaine commande !");
+                                _underWaterEffect = true;
                                 break;
                             case SPELLSTATE.FEU:
                                 _gameTimer -= _fireHeadTimerDamage;
@@ -486,9 +506,22 @@ public class GameManager : MonoBehaviour
         _currentPlayerSpellState = SPELLSTATE.PLANTE;
     }
     
+    private void LancerPotion()
+    {
+        Debug.Log("Throw potion");
+        _currentTurnAction = ENTITIES_ACTIONS.LANCER;
+        _currentPlayerSpellState = SPELLSTATE.POTION;
+    }
+    
     private void BoirePotion()
     {
         _gameTimer += 20;
+        _currentTurnAction = ENTITIES_ACTIONS.BOIRE;
+    }
+    
+    private void BoireFeu()
+    {
+        _gameTimer -= 20;
         _currentTurnAction = ENTITIES_ACTIONS.BOIRE;
     }
     
@@ -667,7 +700,8 @@ public class GameManager : MonoBehaviour
         EAU,
         FEU,
         PLANTE,
-        TETE
+        TETE,
+        POTION
     }
 
     public enum SPELLREACTION
