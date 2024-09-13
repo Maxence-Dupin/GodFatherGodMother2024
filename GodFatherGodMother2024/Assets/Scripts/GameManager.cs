@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
 
+    [Header("Sprite")]
+    [SerializeField] private List<Image> _listOfDragonHead; 
+
     private List<int> _DragonHealth;
     private USBDeviceName _selectedDragonHead;
     private Dragon.DragonHead _headClassSelected;
@@ -624,28 +627,39 @@ public class GameManager : MonoBehaviour
             case USBDeviceName.MiddleHead:
                 _headClassSelected = _enemy.DragonHeads[1];
                 _currentHydraSpellState = _headClassSelected.Element;
-
+                _listOfDragonHead[0].color = new Color(160, 160, 160, 255);
+                _listOfDragonHead[2].color = new Color(160, 160, 160, 255);
                 break;
             case USBDeviceName.RightHead:
                 _headClassSelected = _enemy.DragonHeads[2];
                 _currentHydraSpellState = _headClassSelected.Element;
+                _listOfDragonHead[0].color = new Color(160, 160, 160, 255);
+                _listOfDragonHead[1].color = new Color(160, 160, 160, 255);
 
                 break;
             case USBDeviceName.LeftHead:
                 _headClassSelected = _enemy.DragonHeads[0];
                 _currentHydraSpellState = _headClassSelected.Element;
+                _listOfDragonHead[1].color = new Color(160, 160, 160, 255);
+                _listOfDragonHead[2].color = new Color(160, 160, 160, 255);
 
                 break;
             case USBDeviceName.Multiple:
                 Debug.Log("Error");
                 _headClassSelected = null;
                 _currentHydraSpellState = SPELLSTATE.None;
+                _listOfDragonHead[0].color = new Color(255, 255, 255, 255);
+                _listOfDragonHead[1].color = new Color(255, 255, 255, 255);
+                _listOfDragonHead[2].color = new Color(255, 255, 255, 255);
 
                 break;
             case USBDeviceName.None:
                 Debug.Log("Error");
                 _headClassSelected = null;
                 _currentHydraSpellState = SPELLSTATE.None;
+                _listOfDragonHead[0].color = new Color(255, 255, 255, 255);
+                _listOfDragonHead[1].color = new Color(255, 255, 255, 255);
+                _listOfDragonHead[2].color = new Color(255, 255, 255, 255);
                 break;
             default:
                 break;
