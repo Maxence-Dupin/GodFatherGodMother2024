@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -50,6 +49,8 @@ public class GameManager : MonoBehaviour
     
     private Dictionary<string, int> _spellsCooldown = new();
 
+    private bool _underWaterEffect;
+
     #endregion
 
     #region Properties
@@ -73,16 +74,31 @@ public class GameManager : MonoBehaviour
         for (var i = 0; i < _spellsList.Count; i++)
         {
             var spell = _spellsList[i];
-            
-            if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
+
+            if (!_underWaterEffect)
             {
-                _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
-                spell.onEventTriggered?.Invoke();
-                NextTurn();
-                return spell.Message;
+                if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
+                {
+                    _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
+                    spell.onEventTriggered?.Invoke();
+                    NextTurn();
+                    return spell.Message;
+                }
+            }
+            else
+            {
+                if (elementWord == spell.Action.ToString() && actionWord == spell.Element.ToString())
+                {
+                    Debug.Log(elementWord + ", " + actionWord);
+                    _spellsCooldown.Add(actionWord, _cooldownTurnsNumber + 1);
+                    spell.onEventTriggered?.Invoke();
+                    NextTurn();
+                    return spell.Message;
+                }
             }
         }
 
+        _underWaterEffect = false;
         onBadCommand.Invoke();
         return null;
     }
@@ -424,6 +440,8 @@ public class GameManager : MonoBehaviour
                                 Debug.Log("State de l'hydra à none ???");
                                 break;
                             case SPELLSTATE.EAU:
+                                _console.ShowIndependantMessage("Vous êtes sous l'effet de la tête d'eau, inversez l'ordre des mots pour votre prochaine commande !");
+                                _underWaterEffect = true;
                                 break;
                             case SPELLSTATE.FEU:
                                 _gameTimer -= _fireHeadTimerDamage;

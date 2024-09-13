@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -90,6 +89,12 @@ public class CommandConsole : MonoBehaviour
     public void ShowMessage(string message)
     {
         _currentText.text = message;
+    }
+    
+    public void ShowIndependantMessage(string message)
+    {
+        var newText = Instantiate(_textPrefab, _content);
+        newText.text = message;
     }
 
     #endregion
