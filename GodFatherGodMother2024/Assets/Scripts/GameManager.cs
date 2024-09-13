@@ -186,6 +186,7 @@ public class GameManager : MonoBehaviour
         _spellsList[20].onEventTriggered += LancerEau;
         _spellsList[21].onEventTriggered += LancerFeu;
         _spellsList[22].onEventTriggered += LancerPlante;
+        _spellsList[23].onEventTriggered += LancerPotion;
 
         onBadCommand += BadCommand;
 
@@ -266,6 +267,12 @@ public class GameManager : MonoBehaviour
                         {
                             outcome = CalculateReaction(_currentPlayerSpellState, _currentHydraSpellState);
                         }
+
+                        if (_currentPlayerSpellState == SPELLSTATE.POTION)
+                        {
+                            HeadDamage(-10);
+                        }
+                        
                         switch (outcome)
                         {
                             case SPELLREACTION.NO_REACT:
@@ -499,6 +506,13 @@ public class GameManager : MonoBehaviour
         _currentPlayerSpellState = SPELLSTATE.PLANTE;
     }
     
+    private void LancerPotion()
+    {
+        Debug.Log("Throw potion");
+        _currentTurnAction = ENTITIES_ACTIONS.LANCER;
+        _currentPlayerSpellState = SPELLSTATE.POTION;
+    }
+    
     private void BoirePotion()
     {
         _gameTimer += 20;
@@ -680,7 +694,8 @@ public class GameManager : MonoBehaviour
         EAU,
         FEU,
         PLANTE,
-        TETE
+        TETE,
+        POTION
     }
 
     public enum SPELLREACTION
