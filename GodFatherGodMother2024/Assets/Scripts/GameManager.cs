@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
     [SerializeField] private Image _gameOverPanel;
+    [SerializeField] private Image _victoryPanel;
     [SerializeField] private Image _exclamation;
 
     [Header("Sprite")]
@@ -511,7 +512,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Victoire");
+            _victoryPanel.gameObject.SetActive(true);
         }
     }
 
