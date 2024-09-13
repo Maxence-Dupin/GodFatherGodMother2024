@@ -487,6 +487,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7efffa63bd30dbf44b0dd60e11b3edf7, type: 2}
   _playerTurn: 1
   _gameTimer: 300
+  _cooldownTurnsNumber: 2
   _player: {fileID: 1372020515}
   _enemy: {fileID: 773330780}
   _timerText: {fileID: 1013287883}

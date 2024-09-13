@@ -11,9 +11,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private List<Spell> _spellsList;
 
-    [Header("Start Parameters")]
+    [Header("Parameters")]
     [SerializeField] private bool _playerTurn;
     [SerializeField] private float _gameTimer;
+    [SerializeField] private int _cooldownTurnsNumber;
 
     [Header("Set Up")] 
     [SerializeField] private Player _player;
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
             
             if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
             {
-                _spellsCooldown.Add(elementWord, 2);
+                _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
                 spell.onEventTriggered?.Invoke();
                 NextTurn();
                 return spell.Message;
