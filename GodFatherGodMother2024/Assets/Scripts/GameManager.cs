@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
 
-    private int _baseDragonHealth;
+    private List<int> _DragonHealth;
     private USBDeviceName _selectedDragonHead;
     private Dragon.DragonHead _headClassSelected;
     private bool _isDragonStun = false;
@@ -177,9 +178,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        _baseDragonHealth = _enemy.Health;
-        
-        SetCooldownOnARandomVerb();
+        foreach(var head in _enemy.DragonHeads)
+        {
+            head.Init();
+        }
     }
 
     private void Update()
@@ -189,7 +191,10 @@ public class GameManager : MonoBehaviour
         _gameTimer -= Time.deltaTime;
         var timerValue = (int)_gameTimer + 1;
         _timerText.text = timerValue.ToString();
-
+        if(_headClassSelected != null)
+        {
+            _dragonHealth.value = (float)_headClassSelected.HealthPerHead / _headClassSelected.MaxHealthPerHead;
+        }
         if (_gameTimer <= 0 && !_gameOver)
         {
             _gameOver = true;
@@ -227,7 +232,12 @@ public class GameManager : MonoBehaviour
     {
         if (_gameOver) return;
         
-        if (_enemy.Health > 0)
+        if(_headClassSelected == null)
+        {
+            
+        }
+
+        if (_headClassSelected.HealthPerHead > 0)
         {
             if (_playerTurn)
             {
@@ -249,6 +259,7 @@ public class GameManager : MonoBehaviour
                                 _console.ShowMessage(
                                     "Elle a pris cher ! Vu comme tu l’as sonnée, tu peux sûrement réaliser une nouvelle action avant qu’elle réagisse.");
                                 _isDragonStun = true;
+                                HeadDamage(10);
                                 break;
                             case SPELLREACTION.RESIST:
                                 _console.ShowMessage("Oups, ce n’est pas très efficace… J’espère que tu sais faire mieux.");
@@ -257,6 +268,7 @@ public class GameManager : MonoBehaviour
                             case SPELLREACTION.NEUTRAL:
                                 _console.ShowMessage("Pas mal, tu peux mieux faire mais tu peux aussi faire pire.");
                                 Debug.Log("Take DMG");
+                                HeadDamage(5);
                                 break;
                             default:
                                 break;
@@ -380,12 +392,14 @@ public class GameManager : MonoBehaviour
                             break;
                         case SPELLREACTION.WEAKNESS:
                             _isDragonStun = true;
+                            HeadDamage(15);
                             break;
                         case SPELLREACTION.RESIST:
                             Debug.Log("No DMG * 2");
                             break;
                         case SPELLREACTION.NEUTRAL:
                             Debug.Log("Take DMG * 2");
+                            HeadDamage(10);
                             break;
                         default:
                             break;
@@ -439,7 +453,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            //Debug.Log("Victoire");
+            Debug.Log("Victoire");
         }
     }
 
@@ -586,11 +600,13 @@ public class GameManager : MonoBehaviour
                 break;
             case USBDeviceName.Multiple:
                 Debug.Log("Error");
+                _headClassSelected = null;
                 _currentHydraSpellState = SPELLSTATE.None;
 
                 break;
             case USBDeviceName.None:
                 Debug.Log("Error");
+                _headClassSelected = null;
                 _currentHydraSpellState = SPELLSTATE.None;
                 break;
             default:
@@ -598,6 +614,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void HeadDamage(int dmg)
+    {
+        _headClassSelected.HealthPerHead -= dmg;
+    }
     private void SetCooldownOnARandomVerb()
     {
         string spellToBlock = null;

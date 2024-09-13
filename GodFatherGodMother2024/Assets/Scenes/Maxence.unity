@@ -494,7 +494,7 @@ MonoBehaviour:
   _enemy: {fileID: 773330780}
   _console: {fileID: 485110600}
   _timerText: {fileID: 1013287883}
-  _dragonHealth: {fileID: 0}
+  _dragonHealth: {fileID: 997718722}
 --- !u!114 &288264450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1591,17 +1591,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f8cf007e41dab40a5a907106993295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Dragon Ethernet
-  _health: 50
+  _name: Dragon
   _dragonHeads:
-  - _element: 2
-    _spriteGameObject: {fileID: 1462432648}
+  - _maxHealthPerHead: 30
+    _healthPerHead: 0
+    _element: 1
+    _spriteGameObject: {fileID: 0}
     _associatedKeyNumber: 0
-  - _element: 3
-    _spriteGameObject: {fileID: 309146929}
+  - _maxHealthPerHead: 30
+    _healthPerHead: 0
+    _element: 2
+    _spriteGameObject: {fileID: 0}
     _associatedKeyNumber: 1
-  - _element: 1
-    _spriteGameObject: {fileID: 1395249187}
+  - _maxHealthPerHead: 30
+    _healthPerHead: 0
+    _element: 3
+    _spriteGameObject: {fileID: 0}
     _associatedKeyNumber: 2
 --- !u!224 &823067031 stripped
 RectTransform:
@@ -2016,7 +2021,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 471362749}
   m_HandleRect: {fileID: 0}
-  m_Direction: 1
+  m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
