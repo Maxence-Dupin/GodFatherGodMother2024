@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int _cooldownTurnsNumber;
     [SerializeField] private int _fireHeadTimerDamage;
     [SerializeField] private int _plantHeadCooldownOnSpell;
+    [SerializeField] private Color _headColor;
+    [SerializeField] private List<GameObject> _fireVFX;
+    [SerializeField] private List<GameObject> _waterVFX;
+    [SerializeField] private List<GameObject> _plantVFX;
 
     [Header("Set Up")] 
     [SerializeField] private Player _player;
@@ -283,6 +287,7 @@ public class GameManager : MonoBehaviour
                         if (_currentPlayerSpellState == SPELLSTATE.POTION)
                         {
                             HeadDamage(-10);
+                            return;
                         }
                         
                         switch (outcome)
@@ -308,6 +313,10 @@ public class GameManager : MonoBehaviour
                             default:
                                 break;
                         }
+
+                        List<GameObject> tempList = CallTypeAnimation();
+                        tempList[_headClassSelected.AssociatedKeyNumber].SetActive(true);
+
                         Debug.Log(outcome);
                         break;
                     case ENTITIES_ACTIONS.DEFENDRE:
@@ -513,7 +522,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Throw fire");
         _currentTurnAction = ENTITIES_ACTIONS.LANCER;
         _currentPlayerSpellState = SPELLSTATE.FEU;
-
     }
     
     private void LancerEau()
@@ -632,6 +640,23 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private List<GameObject> CallTypeAnimation()
+    {
+        List<GameObject> result = new List<GameObject>();
+        switch (_currentPlayerSpellState)
+        {
+            case SPELLSTATE.PLANTE:
+                result = _plantVFX;
+                break;
+            case SPELLSTATE.EAU:
+                result =  _waterVFX;
+                break;
+            case SPELLSTATE.FEU:
+                result = _fireVFX;
+                break;
+        }
+        return result;
+    }
     //If a command who's not existing is called
     private void BadCommand()
     {
@@ -648,25 +673,23 @@ public class GameManager : MonoBehaviour
             case USBDeviceName.MiddleHead:
                 _headClassSelected = _enemy.DragonHeads[1];
                 _currentHydraSpellState = _headClassSelected.Element;
-                _listOfDragonHead[0].color = new Color(160, 160, 160, 255);
-                _listOfDragonHead[1].color = new Color(255, 255, 255, 255);
-                _listOfDragonHead[2].color = new Color(160, 160, 160, 255);
-                return;
+                _listOfDragonHead[0].color = _headColor;
+                _listOfDragonHead[2].color = _headColor;
+                break;
             case USBDeviceName.RightHead:
                 _headClassSelected = _enemy.DragonHeads[2];
                 _currentHydraSpellState = _headClassSelected.Element;
-                _listOfDragonHead[0].color = new Color(160, 160, 160, 255);
-                _listOfDragonHead[1].color = new Color(160, 160, 160, 255);
-                _listOfDragonHead[2].color = new Color(255, 255, 255, 255);
-                return;
+                _listOfDragonHead[0].color = _headColor;
+                _listOfDragonHead[1].color = _headColor;
+                break;
             case USBDeviceName.LeftHead:
                 Debug.Log("yo les mecs");
                 _headClassSelected = _enemy.DragonHeads[0];
                 _currentHydraSpellState = _headClassSelected.Element;
-                _listOfDragonHead[0].color = new Color(255, 255, 255, 255);
-                _listOfDragonHead[1].color = new Color(160, 160, 160, 255);
-                _listOfDragonHead[2].color = new Color(160, 160, 160, 255);
-                return;
+                _listOfDragonHead[1].color = _headColor;
+                _listOfDragonHead[2].color = _headColor;
+
+                break;
             case USBDeviceName.Multiple:
                 Debug.Log("Error");
                 _headClassSelected = null;
@@ -722,6 +745,8 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(_currentTurnDuration);
 
+        List<GameObject> tempList = CallTypeAnimation();
+        tempList[_headClassSelected.AssociatedKeyNumber].SetActive(false);
         //Hydra turn based
         _playerTurn = !_playerTurn;
         
