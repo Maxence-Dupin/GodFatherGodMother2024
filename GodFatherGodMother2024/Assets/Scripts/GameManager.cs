@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
                     _spellsCooldown.Add(elementWord, _cooldownTurnsNumber + 1);
                     spell.onEventTriggered?.Invoke();
                     NextTurn();
+                    _underWaterEffect = false;
                     return spell.Message;
                 }
             }
@@ -97,6 +98,7 @@ public class GameManager : MonoBehaviour
                     _spellsCooldown.Add(actionWord, _cooldownTurnsNumber + 1);
                     spell.onEventTriggered?.Invoke();
                     NextTurn();
+                    _underWaterEffect = false;
                     return spell.Message;
                 }
             }
@@ -641,22 +643,24 @@ public class GameManager : MonoBehaviour
                 _headClassSelected = _enemy.DragonHeads[1];
                 _currentHydraSpellState = _headClassSelected.Element;
                 _listOfDragonHead[0].color = new Color(160, 160, 160, 255);
+                _listOfDragonHead[1].color = new Color(255, 255, 255, 255);
                 _listOfDragonHead[2].color = new Color(160, 160, 160, 255);
-                break;
+                return;
             case USBDeviceName.RightHead:
                 _headClassSelected = _enemy.DragonHeads[2];
                 _currentHydraSpellState = _headClassSelected.Element;
                 _listOfDragonHead[0].color = new Color(160, 160, 160, 255);
                 _listOfDragonHead[1].color = new Color(160, 160, 160, 255);
-
-                break;
+                _listOfDragonHead[2].color = new Color(255, 255, 255, 255);
+                return;
             case USBDeviceName.LeftHead:
+                Debug.Log("yo les mecs");
                 _headClassSelected = _enemy.DragonHeads[0];
                 _currentHydraSpellState = _headClassSelected.Element;
+                _listOfDragonHead[0].color = new Color(255, 255, 255, 255);
                 _listOfDragonHead[1].color = new Color(160, 160, 160, 255);
                 _listOfDragonHead[2].color = new Color(160, 160, 160, 255);
-
-                break;
+                return;
             case USBDeviceName.Multiple:
                 Debug.Log("Error");
                 _headClassSelected = null;
@@ -664,8 +668,7 @@ public class GameManager : MonoBehaviour
                 _listOfDragonHead[0].color = new Color(255, 255, 255, 255);
                 _listOfDragonHead[1].color = new Color(255, 255, 255, 255);
                 _listOfDragonHead[2].color = new Color(255, 255, 255, 255);
-
-                break;
+                return;
             case USBDeviceName.None:
                 Debug.Log("Error");
                 _headClassSelected = null;
@@ -673,7 +676,7 @@ public class GameManager : MonoBehaviour
                 _listOfDragonHead[0].color = new Color(255, 255, 255, 255);
                 _listOfDragonHead[1].color = new Color(255, 255, 255, 255);
                 _listOfDragonHead[2].color = new Color(255, 255, 255, 255);
-                break;
+                return;
             default:
                 break;
         }
