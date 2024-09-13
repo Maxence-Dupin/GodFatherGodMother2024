@@ -252,10 +252,9 @@ public class GameManager : MonoBehaviour
         
         if(_headClassSelected == null)
         {
-            
+            Debug.Log("PAS DE TETE");
         }
-
-        if (_headClassSelected.HealthPerHead > 0)
+        else if (_headClassSelected.HealthPerHead > 0)
         {
             if (_playerTurn)
             {
