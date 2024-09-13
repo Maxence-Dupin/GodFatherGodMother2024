@@ -315,7 +315,6 @@ public class GameManager : MonoBehaviour
                         }
 
                         List<GameObject> tempList = CallTypeAnimation();
-                        Debug.Log(tempList[_headClassSelected.AssociatedKeyNumber].name);
                         tempList[_headClassSelected.AssociatedKeyNumber].SetActive(true);
 
                         Debug.Log(outcome);
@@ -655,6 +654,9 @@ public class GameManager : MonoBehaviour
             case SPELLSTATE.FEU:
                 result = _fireVFX;
                 break;
+            case SPELLSTATE.None:
+                result = null;
+                break;  
         }
         return result;
     }
@@ -746,7 +748,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(_currentTurnDuration);
 
         List<GameObject> tempList = CallTypeAnimation();
-        tempList[_headClassSelected.AssociatedKeyNumber].SetActive(false);
+        if(tempList != null)
+        {
+            tempList[_headClassSelected.AssociatedKeyNumber].SetActive(false);
+        }
         //Hydra turn based
         _playerTurn = !_playerTurn;
         
