@@ -488,10 +488,13 @@ MonoBehaviour:
   _playerTurn: 1
   _gameTimer: 300
   _cooldownTurnsNumber: 2
+  _fireHeadTimerDamage: 20
+  _plantHeadCooldownOnSpell: 1
   _player: {fileID: 1372020515}
   _enemy: {fileID: 773330780}
+  _console: {fileID: 485110600}
   _timerText: {fileID: 1013287883}
-  _dragonHealth: {fileID: 0}
+  _dragonHealth: {fileID: 997718722}
 --- !u!114 &288264450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,7 +763,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -20, y: 0}
-  m_SizeDelta: {x: 100, y: 950}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &417641702
 MonoBehaviour:
@@ -838,8 +841,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: b282e0b104a209944bd02772eea6c339, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -914,7 +917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6d1784d174ef25419d5f3a256d0d10f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6464add06f6faef47bcc8f152e6ec0b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -946,7 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: FEU
   _image: {fileID: 417895756}
-  _secondSprite: {fileID: 21300000, guid: 8da6803ae873f074b877e4f5373f8f31, type: 3}
+  _secondSprite: {fileID: 21300000, guid: d8c46b6b6a5df6748a1b53bc5ea69794, type: 3}
 --- !u!1 &471362748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1352,7 +1355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: DEFENDRE
   _image: {fileID: 530188822}
-  _secondSprite: {fileID: 21300000, guid: 9fe46051933f3114395fab30b2e1a2f2, type: 3}
+  _secondSprite: {fileID: 21300000, guid: 8276bb10169cd26418dda9cd8d20ce72, type: 3}
 --- !u!114 &530188822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,17 +1591,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f8cf007e41dab40a5a907106993295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Dragon Ethernet
-  _health: 50
+  _name: Dragon
   _dragonHeads:
-  - _element: 2
-    _spriteGameObject: {fileID: 1462432648}
+  - _maxHealthPerHead: 30
+    _healthPerHead: 0
+    _element: 1
+    _spriteGameObject: {fileID: 0}
     _associatedKeyNumber: 0
-  - _element: 3
-    _spriteGameObject: {fileID: 309146929}
+  - _maxHealthPerHead: 30
+    _healthPerHead: 0
+    _element: 2
+    _spriteGameObject: {fileID: 0}
     _associatedKeyNumber: 1
-  - _element: 1
-    _spriteGameObject: {fileID: 1395249187}
+  - _maxHealthPerHead: 30
+    _healthPerHead: 0
+    _element: 3
+    _spriteGameObject: {fileID: 0}
     _associatedKeyNumber: 2
 --- !u!224 &823067031 stripped
 RectTransform:
@@ -1668,7 +1676,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: TETE
   _image: {fileID: 829783161}
-  _secondSprite: {fileID: 21300000, guid: 3b7d425856854904b8be5522e8d28fd5, type: 3}
+  _secondSprite: {fileID: 21300000, guid: bb271f06ac8cd0b4397b639a8b83504a, type: 3}
 --- !u!114 &829783161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1689,7 +1697,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6c04b590874d4454eb6ce5b85ec98801, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4739fbcb01759e48a2b7a885b0d989e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1893,7 +1901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: PLANTE
   _image: {fileID: 924646088}
-  _secondSprite: {fileID: 21300000, guid: 16123c11e7a398a4b98e8190417fe3b3, type: 3}
+  _secondSprite: {fileID: 21300000, guid: 119620ebf2dbc6642b0a3477a333edd2, type: 3}
 --- !u!114 &924646088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1914,7 +1922,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 04ab2bce435571249ad39f5f423e609d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54a2ee766472c5249815d5f20d194eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2013,7 +2021,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 471362749}
   m_HandleRect: {fileID: 0}
-  m_Direction: 1
+  m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
@@ -2571,7 +2579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: EAU
   _image: {fileID: 1091906407}
-  _secondSprite: {fileID: 21300000, guid: b2ed851337f9e114cb383295442f50db, type: 3}
+  _secondSprite: {fileID: 21300000, guid: 0f5ed7c0b9a03244ea6c3454f5ecaa85, type: 3}
 --- !u!114 &1091906407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2592,7 +2600,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5dafce0413db7fa4bad95250b574937e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8058595ba476b3146b157e9e621892d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3845,7 +3853,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: POTION
   _image: {fileID: 1736132733}
-  _secondSprite: {fileID: 21300000, guid: e0b02e673c3590645900663c95e7811b, type: 3}
+  _secondSprite: {fileID: 21300000, guid: ddd5bafaf0e962c41a0ed44eef3f8baf, type: 3}
 --- !u!114 &1736132733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3866,7 +3874,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c0acf2bf796133f4c84bbca06f08ee12, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 074180585b439334a98bbb762b3d8a24, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
