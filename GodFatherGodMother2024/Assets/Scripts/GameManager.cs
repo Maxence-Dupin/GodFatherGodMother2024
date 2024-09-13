@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("Set Up")] 
     [SerializeField] private Player _player;
     [SerializeField] private Dragon _enemy;
+    [SerializeField] private CommandConsole _console;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
 
@@ -240,12 +241,16 @@ public class GameManager : MonoBehaviour
                                 Debug.Log("FLOP WTF ?");
                                 break;
                             case SPELLREACTION.WEAKNESS:
+                                _console.ShowMessage(
+                                    "Elle a pris cher ! Vu comme tu l’as sonnée, tu peux sûrement réaliser une nouvelle action avant qu’elle réagisse.");
                                 _isDragonStun = true;
                                 break;
                             case SPELLREACTION.RESIST:
+                                _console.ShowMessage("Oups, ce n’est pas très efficace… J’espère que tu sais faire mieux.");
                                 Debug.Log("No DMG");
                                 break;
                             case SPELLREACTION.NEUTRAL:
+                                _console.ShowMessage("Pas mal, tu peux mieux faire mais tu peux aussi faire pire.");
                                 Debug.Log("Take DMG");
                                 break;
                             default:

@@ -14,5 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _action: 2
   _element: 1
-  _message: "Charger de l\u2019eau contre la t\xEAte d\u2019un dragon ? Pas tr\xE8s
-    efficace."
+  _message: "Attaque d\u2019eau am\xE9lior\xE9e, frappez vite !"

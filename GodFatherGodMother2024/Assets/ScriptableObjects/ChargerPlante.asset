@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _action: 2
   _element: 2
-  _message: 
+  _message: "Attaque de plante am\xE9lior\xE9e, frappez vite !"

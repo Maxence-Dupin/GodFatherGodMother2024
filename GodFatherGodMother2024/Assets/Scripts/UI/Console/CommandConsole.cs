@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -84,6 +85,11 @@ public class CommandConsole : MonoBehaviour
         
         _currentInputField.Select();
         _currentInputField.ActivateInputField();
+    }
+
+    public void ShowMessage(string message)
+    {
+        _currentText.text = message;
     }
 
     #endregion
