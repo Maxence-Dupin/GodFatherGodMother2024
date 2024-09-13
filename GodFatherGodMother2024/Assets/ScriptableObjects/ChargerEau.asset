@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _action: 2
   _element: 1
-  _message: "Attaque d\u2019eau am\xE9lior\xE9e, frappez vite !"
+  _message: "Attaque d\u2019eau am\xE9lior\xE9e, elle tombera dans 2 tours !"
