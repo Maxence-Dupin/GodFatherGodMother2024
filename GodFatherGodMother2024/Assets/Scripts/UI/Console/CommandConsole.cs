@@ -22,6 +22,8 @@ public class CommandConsole : MonoBehaviour
     private List<TMP_InputField> _inputFields = new();
     private List<TextMeshProUGUI> _texts = new();
 
+    private TextMeshProUGUI _independanteMessage;
+
     #endregion
 
     #region Public Methods
@@ -29,7 +31,7 @@ public class CommandConsole : MonoBehaviour
     public void EnterCommand()
     {
         if (!Input.GetKeyDown(KeyCode.Return)) return;
-        
+
         var words = new List<string>(_currentInputField.text.Split(" "));
 
         for (var i = 0 ; i < words.Count ; i++)
@@ -39,6 +41,8 @@ public class CommandConsole : MonoBehaviour
             words.Remove(words[i]);
             i--;
         }
+
+        DeleteIndependanteMessage();
         
         GrimoireManager.Instance.CheckGrimoireLetters(words);
 
@@ -93,8 +97,26 @@ public class CommandConsole : MonoBehaviour
     
     public void ShowIndependantMessage(string message)
     {
-        var newText = Instantiate(_textPrefab, _content);
-        newText.text = message;
+        var inputField = _inputFields[0];
+        _inputFields.Remove(inputField);
+        Destroy(inputField.gameObject);
+        
+        var text = _texts[0];
+        _texts.Remove(text);
+        Destroy(text.gameObject);
+        
+        DeleteIndependanteMessage();
+        
+        _independanteMessage = Instantiate(_textPrefab, _content);
+        _independanteMessage.text = message;
+    }
+
+    public void DeleteIndependanteMessage()
+    {
+        if (_independanteMessage != null)
+        {
+            Destroy(_independanteMessage.gameObject);
+        }
     }
 
     #endregion
