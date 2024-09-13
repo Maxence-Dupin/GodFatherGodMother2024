@@ -655,6 +655,9 @@ public class GameManager : MonoBehaviour
             case SPELLSTATE.FEU:
                 result = _fireVFX;
                 break;
+            case SPELLSTATE.None:
+                result = null;
+                break;  
         }
         return result;
     }
@@ -684,7 +687,6 @@ public class GameManager : MonoBehaviour
                 _listOfDragonHead[1].color = _headColor;
                 break;
             case USBDeviceName.LeftHead:
-                Debug.Log("yo les mecs");
                 _headClassSelected = _enemy.DragonHeads[0];
                 _currentHydraSpellState = _headClassSelected.Element;
                 _listOfDragonHead[1].color = _headColor;
@@ -742,12 +744,15 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator WaitEndOfTurn()
     {
-        _currentTurnDuration = 1f;
+        _currentTurnDuration = 3f;
 
         yield return new WaitForSeconds(_currentTurnDuration);
 
         List<GameObject> tempList = CallTypeAnimation();
-        tempList[_headClassSelected.AssociatedKeyNumber].SetActive(false);
+        if(tempList != null)
+        {
+            tempList[_headClassSelected.AssociatedKeyNumber].SetActive(false);
+        }
         //Hydra turn based
         _playerTurn = !_playerTurn;
         

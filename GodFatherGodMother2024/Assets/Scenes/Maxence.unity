@@ -136,6 +136,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114008786437779198, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 278070464795593464, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351275910200685149, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1674197095107530697, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2275067777401953963, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4208502775422140480, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
@@ -176,6 +192,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4208502775422140480, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4251087403013930805, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5793355466853507477, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6393705439186652642, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6722802558860432086, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7760337402623920412, guid: b7134ec4a1d40ca4584505ca6f438096, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
