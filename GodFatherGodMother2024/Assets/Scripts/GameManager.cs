@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
     [SerializeField] private Image _gameOverPanel;
+    [SerializeField] private Image _exclamation;
 
     [Header("Sprite")]
     [SerializeField] private List<Image> _listOfDragonHead; 
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance => _instance;
 
+    public Dictionary<string, int> SpellsCooldown => _spellsCooldown;
+
     #endregion
 
     #region Public Methods
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour
     {
         if (_spellsCooldown.ContainsKey(elementWord) || _spellsCooldown.ContainsKey(actionWord))
         {
+            _currentPlayerSpellState = SPELLSTATE.None;
             NextTurn();
             return "Le sort n'est pas utilisable pour le moment.";
         }
@@ -225,6 +229,8 @@ public class GameManager : MonoBehaviour
             _timerText.text = "0";
             _gameOverPanel.gameObject.SetActive(true);
         }
+
+        _exclamation.enabled = _spellsCooldown.Count > 0;
     }
     
     private void OnDestroy()

@@ -54,7 +54,7 @@ public class GrimoireManager : MonoBehaviour
         }
         else
         {
-            _grimoireTransform.DOAnchorPosX(1700, 0.5f);
+            _grimoireTransform.DOAnchorPosX(1950, 0.5f);
             if (!_pauseMenuOpened)
             {
                 _darkPanel.DOFade(0f, 0.5f);
