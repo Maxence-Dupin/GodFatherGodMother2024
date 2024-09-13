@@ -27,6 +27,7 @@ public class Dragon : Entity
 
         public int MaxHealthPerHead { get => _maxHealthPerHead; set => _maxHealthPerHead = value; }
         public int HealthPerHead { get => _healthPerHead; set => _healthPerHead = value; }
+        public int AssociatedKeyNumber { get => _associatedKeyNumber; set => _associatedKeyNumber = value; }
 
         public void Init()
         {
