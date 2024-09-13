@@ -176,6 +176,7 @@ public class GameManager : MonoBehaviour
         _spellsList[1].onEventTriggered += AnalyserFeu;
         _spellsList[2].onEventTriggered += AnalyserPlante;
         _spellsList[4].onEventTriggered += AnalyserTete;
+        _spellsList[6].onEventTriggered += BoireFeu;
         _spellsList[8].onEventTriggered += BoirePotion;
         _spellsList[10].onEventTriggered += ChargerEau;
         _spellsList[11].onEventTriggered += ChargerFeu;
@@ -516,6 +517,12 @@ public class GameManager : MonoBehaviour
     private void BoirePotion()
     {
         _gameTimer += 20;
+        _currentTurnAction = ENTITIES_ACTIONS.BOIRE;
+    }
+    
+    private void BoireFeu()
+    {
+        _gameTimer -= 20;
         _currentTurnAction = ENTITIES_ACTIONS.BOIRE;
     }
     
