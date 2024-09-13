@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     public string CallSpellEvent(string actionWord, string elementWord)
     {
-        if (_spellsCooldown.ContainsKey(elementWord))
+        if (_spellsCooldown.ContainsKey(elementWord) || _spellsCooldown.ContainsKey(actionWord))
         {
             NextTurn();
             return "Le sort n'est pas utilisable pour le moment.";
@@ -178,6 +178,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         _baseDragonHealth = _enemy.Health;
+        
+        SetCooldownOnARandomVerb();
     }
 
     private void Update()
@@ -413,7 +415,7 @@ public class GameManager : MonoBehaviour
                                 _gameTimer -= _fireHeadTimerDamage;
                                 break;
                             case SPELLSTATE.PLANTE:
-                                SetCooldownOnARandomElement();
+                                SetCooldownOnARandomVerb();
                                 break;
                             case SPELLSTATE.TETE:
                                 Debug.Log("State de l'hydra sur tete ???");
@@ -596,7 +598,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void SetCooldownOnARandomElement()
+    private void SetCooldownOnARandomVerb()
     {
         string spellToBlock = null;
 
@@ -617,7 +619,7 @@ public class GameManager : MonoBehaviour
         
         Debug.Log(spellToBlock);
 
-        _spellsCooldown.Add(spellToBlock, _plantHeadCooldownOnSpell + 1);
+        _spellsCooldown.Add(spellToBlock, _plantHeadCooldownOnSpell);
     }
 
     private IEnumerator WaitEndOfTurn()
