@@ -309,6 +309,7 @@ public class GameManager : MonoBehaviour
                         }
 
                         List<GameObject> tempList = CallTypeAnimation();
+                        Debug.Log(tempList[_headClassSelected.AssociatedKeyNumber].name);
                         tempList[_headClassSelected.AssociatedKeyNumber].SetActive(true);
 
                         Debug.Log(outcome);
@@ -677,7 +678,6 @@ public class GameManager : MonoBehaviour
                 _listOfDragonHead[1].color = _headColor;
                 break;
             case USBDeviceName.LeftHead:
-                Debug.Log("yo les mecs");
                 _headClassSelected = _enemy.DragonHeads[0];
                 _currentHydraSpellState = _headClassSelected.Element;
                 _listOfDragonHead[1].color = _headColor;
@@ -735,7 +735,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator WaitEndOfTurn()
     {
-        _currentTurnDuration = 1f;
+        _currentTurnDuration = 3f;
 
         yield return new WaitForSeconds(_currentTurnDuration);
 
