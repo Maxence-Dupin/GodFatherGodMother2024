@@ -1417,18 +1417,6 @@ PrefabInstance:
       value: Matrix background
       objectReference: {fileID: 0}
     - target: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
       propertyPath: m_LocalPosition.x
       value: -18.74
       objectReference: {fileID: 0}
@@ -1467,10 +1455,6 @@ PrefabInstance:
     - target: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6431492434610231358, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
-      propertyPath: looping
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
