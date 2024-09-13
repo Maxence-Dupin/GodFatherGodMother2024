@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private CommandConsole _console;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private Slider _dragonHealth;
+    [SerializeField] private Image _gameOverPanel;
 
     private List<int> _DragonHealth;
     private USBDeviceName _selectedDragonHead;
@@ -217,7 +218,7 @@ public class GameManager : MonoBehaviour
         {
             _gameOver = true;
             _timerText.text = "0";
-            //Debug.Log("Game Over");
+            _gameOverPanel.gameObject.SetActive(true);
         }
     }
     
