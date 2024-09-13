@@ -488,6 +488,8 @@ MonoBehaviour:
   _playerTurn: 1
   _gameTimer: 300
   _cooldownTurnsNumber: 2
+  _fireHeadTimerDamage: 20
+  _plantHeadCooldownOnSpell: 1
   _player: {fileID: 1372020515}
   _enemy: {fileID: 773330780}
   _console: {fileID: 485110600}

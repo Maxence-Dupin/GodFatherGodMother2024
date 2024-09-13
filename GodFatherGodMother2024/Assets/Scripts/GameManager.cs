@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _playerTurn;
     [SerializeField] private float _gameTimer;
     [SerializeField] private int _cooldownTurnsNumber;
+    [SerializeField] private int _fireHeadTimerDamage;
+    [SerializeField] private int _plantHeadCooldownOnSpell;
 
     [Header("Set Up")] 
     [SerializeField] private Player _player;
@@ -399,6 +402,26 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
+                        switch(_currentHydraSpellState)
+                        {
+                            case SPELLSTATE.None:
+                                Debug.Log("State de l'hydra à none ???");
+                                break;
+                            case SPELLSTATE.EAU:
+                                break;
+                            case SPELLSTATE.FEU:
+                                _gameTimer -= _fireHeadTimerDamage;
+                                break;
+                            case SPELLSTATE.PLANTE:
+                                SetCooldownOnARandomElement();
+                                break;
+                            case SPELLSTATE.TETE:
+                                Debug.Log("State de l'hydra sur tete ???");
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+
                         Debug.Log("Attaque de l'hydra");
                     }
                     Debug.Log("Roar");
@@ -571,6 +594,30 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void SetCooldownOnARandomElement()
+    {
+        string spellToBlock = null;
+
+        while (spellToBlock == null || _spellsCooldown.ContainsKey(spellToBlock))
+        {
+            var random = Random.Range(0, 5);
+
+            spellToBlock = random switch
+            {
+                0 => "BOIRE",
+                1 => "LANCER",
+                2 => "CHARGER",
+                3 => "ANALYSER",
+                4 => "DEFENDRE",
+                _ => null
+            };
+        }
+        
+        Debug.Log(spellToBlock);
+
+        _spellsCooldown.Add(spellToBlock, _plantHeadCooldownOnSpell + 1);
     }
 
     private IEnumerator WaitEndOfTurn()
