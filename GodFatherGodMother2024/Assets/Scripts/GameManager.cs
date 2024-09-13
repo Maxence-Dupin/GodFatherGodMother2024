@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,7 +32,7 @@ public class GameManager : MonoBehaviour
     private SPELLSTATE _currentPlayerSpellState;
     private SPELLSTATE _currentHydraSpellState;
     private SPELLSTATE _currentChargedSpell;
-    private int _countChargedTurn = 0;
+    private int _countChargedTurn;
 
     private bool _gameOver;
 
@@ -42,6 +41,8 @@ public class GameManager : MonoBehaviour
     public Action onBadCommand;
 
     public Action<USBDeviceName> onHeadChange;
+    
+    private Dictionary<string, int> _spellsCooldown = new();
 
     #endregion
 
@@ -57,12 +58,19 @@ public class GameManager : MonoBehaviour
 
     public string CallSpellEvent(string actionWord, string elementWord)
     {
+        if (_spellsCooldown.ContainsKey(elementWord))
+        {
+            NextTurn();
+            return "Le sort n'est pas utilisable pour le moment.";
+        }
+        
         for (var i = 0; i < _spellsList.Count; i++)
         {
             var spell = _spellsList[i];
             
             if (actionWord == spell.Action.ToString() && elementWord == spell.Element.ToString())
             {
+                _spellsCooldown.Add(elementWord, 2);
                 spell.onEventTriggered?.Invoke();
                 NextTurn();
                 return spell.Message;
@@ -316,7 +324,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Deja en charge");
                             return; 
                         }
-                        Debug.Log("Sort chargé");
+                        Debug.Log("Sort chargï¿½");
                         _countChargedTurn = 2;
                         break;
                 }
@@ -327,6 +335,25 @@ public class GameManager : MonoBehaviour
             {
                 //Debug.Log("Tour ennemi");
                 //Charged turn
+
+                var temp = new Dictionary<string, int>();
+                
+                foreach (var pair in _spellsCooldown)
+                {
+                    temp.Add(pair.Key, pair.Value);
+                    Debug.Log(pair.Key + ", " + pair.Value);
+                }
+                
+                foreach (var pair in temp)
+                {
+                    _spellsCooldown[pair.Key]--;
+
+                    if (_spellsCooldown[pair.Key] <= 0)
+                    {
+                        _spellsCooldown.Remove(pair.Key);
+                    }
+                }
+                
                 if (_countChargedTurn == 2) _countChargedTurn -= 1;
                 else if (_countChargedTurn == 1)
                 {
