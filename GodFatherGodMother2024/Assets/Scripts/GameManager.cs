@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image _gameOverPanel;
     [SerializeField] private Image _victoryPanel;
     [SerializeField] private Image _exclamation;
+    [SerializeField] private ParticleSystem _matrix;
 
     [Header("Sprite")]
     [SerializeField] private List<Image> _listOfDragonHead; 
@@ -215,6 +216,8 @@ public class GameManager : MonoBehaviour
         {
             head.Init();
         }
+        
+        _matrix.Play();
     }
 
     private void Update()

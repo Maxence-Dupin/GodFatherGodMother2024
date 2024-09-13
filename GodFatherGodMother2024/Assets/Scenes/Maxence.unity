@@ -1123,6 +1123,7 @@ MonoBehaviour:
   _gameOverPanel: {fileID: 344620490}
   _victoryPanel: {fileID: 1399335311}
   _exclamation: {fileID: 257658956}
+  _matrix: {fileID: 2004187115}
   _listOfDragonHead:
   - {fileID: 1337105624}
   - {fileID: 376928193}
@@ -2036,6 +2037,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2161,6 +2163,102 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!82 &519420034
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d1d2bd86429d11b4d9a5c170c58b4aca, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &530188818
 GameObject:
   m_ObjectHideFlags: 0
@@ -4196,6 +4294,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Matrix background
       objectReference: {fileID: 0}
+    - target: {fileID: 4825537167531671868, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
       propertyPath: m_LocalScale.x
       value: 108
@@ -4995,6 +5097,11 @@ GameObject:
 --- !u!4 &2004187113 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6040974472151400622, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
+  m_PrefabInstance: {fileID: 1639815734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2004187115 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6431492434610231358, guid: 18847def1b8f19044a5bcb041bf3bbfd, type: 3}
   m_PrefabInstance: {fileID: 1639815734}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2007404966 stripped
