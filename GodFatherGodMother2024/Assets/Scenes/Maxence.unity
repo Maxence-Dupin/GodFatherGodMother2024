@@ -917,7 +917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f6d1784d174ef25419d5f3a256d0d10f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6464add06f6faef47bcc8f152e6ec0b2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -949,7 +949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: FEU
   _image: {fileID: 417895756}
-  _secondSprite: {fileID: 21300000, guid: 8da6803ae873f074b877e4f5373f8f31, type: 3}
+  _secondSprite: {fileID: 21300000, guid: d8c46b6b6a5df6748a1b53bc5ea69794, type: 3}
 --- !u!1 &471362748
 GameObject:
   m_ObjectHideFlags: 0
@@ -1355,7 +1355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: DEFENDRE
   _image: {fileID: 530188822}
-  _secondSprite: {fileID: 21300000, guid: 9fe46051933f3114395fab30b2e1a2f2, type: 3}
+  _secondSprite: {fileID: 21300000, guid: 8276bb10169cd26418dda9cd8d20ce72, type: 3}
 --- !u!114 &530188822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,7 +1671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: TETE
   _image: {fileID: 829783161}
-  _secondSprite: {fileID: 21300000, guid: 3b7d425856854904b8be5522e8d28fd5, type: 3}
+  _secondSprite: {fileID: 21300000, guid: bb271f06ac8cd0b4397b639a8b83504a, type: 3}
 --- !u!114 &829783161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1692,7 +1692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6c04b590874d4454eb6ce5b85ec98801, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c4739fbcb01759e48a2b7a885b0d989e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1896,7 +1896,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: PLANTE
   _image: {fileID: 924646088}
-  _secondSprite: {fileID: 21300000, guid: 16123c11e7a398a4b98e8190417fe3b3, type: 3}
+  _secondSprite: {fileID: 21300000, guid: 119620ebf2dbc6642b0a3477a333edd2, type: 3}
 --- !u!114 &924646088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1917,7 +1917,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 04ab2bce435571249ad39f5f423e609d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 54a2ee766472c5249815d5f20d194eab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: EAU
   _image: {fileID: 1091906407}
-  _secondSprite: {fileID: 21300000, guid: b2ed851337f9e114cb383295442f50db, type: 3}
+  _secondSprite: {fileID: 21300000, guid: 0f5ed7c0b9a03244ea6c3454f5ecaa85, type: 3}
 --- !u!114 &1091906407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2595,7 +2595,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5dafce0413db7fa4bad95250b574937e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8058595ba476b3146b157e9e621892d1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3848,7 +3848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _word: POTION
   _image: {fileID: 1736132733}
-  _secondSprite: {fileID: 21300000, guid: e0b02e673c3590645900663c95e7811b, type: 3}
+  _secondSprite: {fileID: 21300000, guid: ddd5bafaf0e962c41a0ed44eef3f8baf, type: 3}
 --- !u!114 &1736132733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3869,7 +3869,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c0acf2bf796133f4c84bbca06f08ee12, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 074180585b439334a98bbb762b3d8a24, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
